@@ -4,6 +4,19 @@ A Hacker News(HN) search client in Angular using the [HN Search API powered by A
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
+## Deploy
+
+Using `angular-cli-ghpages` for easy deployment to GitHub Pages in `Bash` terminal:
+`npm install -g angular-cli-ghpages`
+
+Make sure to set base-href for correct href resource links? `./`?
+`ng build --prod --base-href "https://slimlime.github.io/hacker-news-search-client-hn-algolia-angular-paginator/"`
+
+Run angular-cli-ghpages with using the shorthand:
+`ngh`
+-- Angular CLI 6 builds in a subfolder under `./dist`. May need to point --dir=dist/[PROJECTNAME]  -- found in `angular.json` 
+e.g. `ngh --dir=dist/hn-search-client`
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
