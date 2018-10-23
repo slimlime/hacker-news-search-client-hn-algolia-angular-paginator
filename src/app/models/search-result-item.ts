@@ -1,8 +1,10 @@
+import { URL } from "url";
+
 /*
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 09: 02: 16
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-24 09: 19: 43
+ * @Last Modified time: 2018-10-24 09: 54: 08
  */
 
 /**
@@ -14,6 +16,8 @@
  */
 export interface SearchResultItem {
     // readonly immutable functional
+    // using primitives first before interfacing, mapping.
+    // following the expected REST API response
 
     /**
      *
@@ -21,7 +25,7 @@ export interface SearchResultItem {
      * @type {string}
      * @memberof SearchResultItem
      */
-    readonly id: string;
+    readonly id: string;  // - NOTE: Search result item listing ID is diffrent to the story_ID??!?
 
     /**
      *
@@ -39,5 +43,17 @@ export interface SearchResultItem {
      */
     readonly created_at_i: number;  // Epoch time.
 
-    
+    readonly author: string;
+
+    readonly title: string;
+
+    readonly url: string;
+
+    readonly textDescription: string;
+
+    readonly points: number;
+
+    readonly parent_ID: number;
+
+    // children? Each comment counts as an item? Number of comments? Related stories?
 }
