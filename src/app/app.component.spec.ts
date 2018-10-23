@@ -10,13 +10,13 @@ describe('AppComponent', () => {
   }));
   it('should create the app', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
+    const app     = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
-  it(`should have as title 'app'`, async(() => {
+  it(`should have app title 'hacker-news-search-client-hn-algolia-angular-paginator'`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app');
+    const app     = fixture.debugElement.componentInstance;
+    expect(app.title).toEqual('hacker-news-search-client-hn-algolia-angular-paginator');
   }));
   it('should render title in a h1 tag', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
