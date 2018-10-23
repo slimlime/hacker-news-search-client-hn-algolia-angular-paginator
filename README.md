@@ -1,4 +1,4 @@
-# HackerNewsSearchClientHnAlgoliaAngularPaginator
+# HackerNewsSearchClientHNAlgoliaAngularPaginator
 
 https://slimlime.github.io/hacker-news-search-client-hn-algolia-angular-paginator/
 
@@ -12,12 +12,17 @@ Using `angular-cli-ghpages` for easy deployment to GitHub Pages in `Bash` termin
 `npm install -g angular-cli-ghpages`
 
 Make sure to set base-href for correct href resource links? e.g. `ng build --prod --base-href ./`?
+
 `ng build --prod --base-href "https://slimlime.github.io/hacker-news-search-client-hn-algolia-angular-paginator/"`
 
 Run angular-cli-ghpages with using the shorthand:
-`ngh`
--- Angular CLI 6 builds in a subfolder under `./dist`. May need to point --dir=dist/[PROJECTNAME]  -- found in `angular.json` 
+
+`ngh` -- Angular CLI 6 build outputs to a subfolder under `./dist`. 
+
+Need to point --dir=dist/[PROJECTNAME]  -- found in `angular.json` 
+
 e.g. `ngh --dir="dist/hn-search-client"`
+
 
 ## Development server
 
