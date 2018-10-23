@@ -1,5 +1,7 @@
 # HackerNewsSearchClientHnAlgoliaAngularPaginator
 
+A Hacker News(HN) search client in Angular using the [HN Search API powered by Algolia](https://hn.algolia.com/api). 
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
 ## Development server
