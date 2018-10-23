@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 09: 02: 16
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-24 09: 09: 47
+ * @Last Modified time: 2018-10-24 09: 19: 43
  */
 
 /**
@@ -39,5 +39,5 @@ export interface SearchResultItem {
      */
     readonly created_at_i: number;  // Epoch time.
 
-
+    
 }
