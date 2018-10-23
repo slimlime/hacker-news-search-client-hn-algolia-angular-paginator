@@ -4,7 +4,7 @@ import { URL } from "url";
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 09: 02: 16
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-24 09: 54: 08
+ * @Last Modified time: 2018-10-24 09: 56: 23
  */
 
 /**
@@ -56,4 +56,12 @@ export interface SearchResultItem {
     readonly parent_ID: number;
 
     // children? Each comment counts as an item? Number of comments? Related stories?
+    /**
+     * 
+     * -- Warning: This looks dangerous.
+     *
+     * @type {SearchResultItem[]}
+     * @memberof SearchResultItem
+     */
+    readonly children: SearchResultItem[];
 }
