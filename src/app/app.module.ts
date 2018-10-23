@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { SearchResultItemComponent } from './search-result-item/search-result-item.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchResultItemComponent
+    SearchResultItemComponent,
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule
