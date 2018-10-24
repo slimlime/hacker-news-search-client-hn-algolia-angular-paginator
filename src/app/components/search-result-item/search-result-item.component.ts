@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 09: 20: 24
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 08: 31: 08
+ * @Last Modified time: 2018-10-25 08: 35: 36
  */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
@@ -14,8 +14,11 @@ import { SearchResultByTopic } from '../../models/search-result-topic';
   styleUrls  : ['./search-result-item.component.css']
 })
 export class SearchResultItemComponent implements OnInit {
-  @Input  () searchResultItem: SearchResultByTopic;
-  @Output() clickChange      : EventEmitter<MouseEvent> = new EventEmitter();
+  @Input() 
+  searchResultItem: SearchResultByTopic;  // can intercept input get pty
+  @Output() 
+  clickChange : EventEmitter<MouseEvent> = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
