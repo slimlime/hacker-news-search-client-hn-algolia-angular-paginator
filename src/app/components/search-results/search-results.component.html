@@ -1,3 +1,16 @@
 <p>
   search-results works!
 </p>
+
+<div id="search-news-feed">
+  <h4>Hacker News search feed</h4>
+  <!-- Dumb components mainly concerned with presentation formatting -->
+  <!-- Data, state management all in top level news-reader component+service -->
+  <ul class="search-results">
+    <li *ngFor="let searchResultItem of searchResults.hits">
+      {{searchResultItem.title}}
+
+      {{searchResultItem.objectID}}
+    </li>
+  </ul>
+</div>
