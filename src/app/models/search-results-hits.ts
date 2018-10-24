@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 17: 58: 53
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 08: 36: 02
+ * @Last Modified time: 2018-10-25 09: 26: 36
  */
 import { SearchResultTopical } from './search-result-topic';
 
@@ -31,7 +31,7 @@ export interface SearchHits {
      * @type {SearchResultTopical[]}
      * @memberof SearchHits
      */
-    readonly searchResultItems: SearchResultTopical[];
+    readonly hits: SearchResultTopical[];
 
     /**
      * Hacker News Algolia REST Search API recommended method for pagination.
