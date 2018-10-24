@@ -9,17 +9,17 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { SearchResultsComponent } from './components/search-results/search-results.component';
+import { NewsReaderComponent } from './components/news-reader/news-reader.component';
 
 const appRoutes: Routes = [
   {
     path      : "",
-    redirectTo: "/search-results",
+    redirectTo: "/news-reader",
     pathMatch : "full"
   },
   {
-    path     : "search-results",
-    component: SearchResultsComponent
+    path     : "news-reader",
+    component: NewsReaderComponent
   }
 ];
 @NgModule({
