@@ -6,6 +6,7 @@ import { SearchResultItemComponent } from './components/search-result-item/searc
 import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { InputSearchBarComponent } from './components/input-search-bar/input-search-bar.component';
+import { ButtonComponent } from './components/button/button.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { InputSearchBarComponent } from './components/input-search-bar/input-sea
     AppComponent,
     SearchResultItemComponent,
     SearchResultsComponent,
-    InputSearchBarComponent
+    InputSearchBarComponent,
+    ButtonComponent
   ],
   imports: [
     BrowserModule,
