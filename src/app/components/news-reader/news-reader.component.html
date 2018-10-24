@@ -4,7 +4,7 @@
 
 <app-input-search-bar>Test</app-input-search-bar>
 
-<app-search-results></app-search-results>
+<app-search-results [searchResults]="news$ | async"></app-search-results>
 
 <!-- - TODO: Add bindings -->
 <app-button></app-button>

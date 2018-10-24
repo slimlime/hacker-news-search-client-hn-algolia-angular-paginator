@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 09: 01: 05
+ * @Last Modified time: 2018-10-25 09: 15: 20
  */
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -17,6 +17,7 @@ import { NewsSearchService } from './../../services/news-search.service';
   styleUrls  : ['./news-reader.component.css']
 })
 export class NewsReaderComponent implements OnInit {
+  news$: Observable<SearchHits>;
 
   constructor( public newsSearchService: NewsSearchService) {
 
@@ -26,8 +27,11 @@ export class NewsReaderComponent implements OnInit {
     const searchObs: Observable<SearchHits> = this.newsSearchService.searchHNArticles("Deep Learning");
     searchObs.subscribe((searchResultsAgg: SearchHits) => {
       console.log('​NewsReaderComponent:: ngOnInit() -> searchResultsAgg', searchResultsAgg);
-      
-    })
+      // - DEBUG: TEST
+    });
+
+    this.news$ = searchObs;
+
   }
 
 }
