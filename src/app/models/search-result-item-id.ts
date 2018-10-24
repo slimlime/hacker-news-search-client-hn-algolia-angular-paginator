@@ -3,18 +3,22 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 09: 02: 16
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-24 10: 30: 17
+ * @Last Modified time: 2018-10-24 14: 10: 44
  */
 
 /**
+ *
+ * Oops do not need this at the moment. Used for searching a specific item by id
+ * to get all accessible associated information for specific item.
+ *
  * Schema for hacker news search
  * Data-first design. Clarity for data definitions before implementing code.
  * Schema allows different types of result items "story", "comment" string value
- *
+ * @example search id 1 for assoc data https:   //hn.algolia.com/api/v1/items/1
  * @export
- * @interface SearchResultItem
+ * @interface SearchResultItemID
  */
-export interface SearchResultItem {
+export interface SearchResultItemID {
     // readonly immutable functional
     // using primitives first before interfacing, mapping.
     // following the expected REST API response
@@ -24,7 +28,7 @@ export interface SearchResultItem {
      *
      * @example 1
      * @type {string}
-     * @memberof SearchResultItem
+     * @memberof SearchResultItemID
      */
     readonly id: number;  // - NOTE: Search result item IDs vs parent/story_IDs.
 
@@ -35,7 +39,7 @@ export interface SearchResultItem {
      * E.g. "Z" indicates UTC/Greenwich time + 0: 00.
      * @example "2009-02-19T12:21:23.000Z"
      * @type {string}
-     * @memberof SearchResultItem
+     * @memberof SearchResultItemID
      */
     readonly created_at: string;  // See if auto-compatible with Date format
 
@@ -45,7 +49,7 @@ export interface SearchResultItem {
      *
      * @example 1235046083
      * @type {number}
-     * @memberof SearchResultItem
+     * @memberof SearchResultItemID
      */
     readonly created_at_i: number;  // Epoch time.
 
@@ -58,14 +62,14 @@ export interface SearchResultItem {
      *
      * @example "story", "comment"
      * @type {string}
-     * @memberof SearchResultItem
+     * @memberof SearchResultItemID
      */
     readonly type: string;
     /**
      * Author / username of the individual who posted/commented the item.
      * @example "slimlime"
      * @type {string}
-     * @memberof SearchResultItem
+     * @memberof SearchResultItemID
      */
     readonly author: string;
 
@@ -74,7 +78,7 @@ export interface SearchResultItem {
      * @returns {null} null value if no title (i.e. comment item)
      *
      * @type {string}
-     * @memberof SearchResultItem
+     * @memberof SearchResultItemID
      */
     readonly title: string;
 
@@ -83,7 +87,7 @@ export interface SearchResultItem {
      *
      * @example "http:\/\/ycombinator.com", null - appears to null for comments.
      * @type {string}
-     * @memberof SearchResultItem
+     * @memberof SearchResultItemID
      */
     readonly url: string;
 
@@ -91,7 +95,7 @@ export interface SearchResultItem {
      *
      *
      * @type {string}
-     * @memberof SearchResultItem
+     * @memberof SearchResultItemID
      */
     readonly textDescription: string;
 
@@ -101,7 +105,7 @@ export interface SearchResultItem {
      * Appears to return null for comments
      *
      * @type {number}
-     * @memberof SearchResultItem
+     * @memberof SearchResultItemID
      */
     readonly points: number;
 
@@ -110,7 +114,7 @@ export interface SearchResultItem {
      *
      * @example item 234567 is a child of/has parent_ID of 234551
      * @type {number}
-     * @memberof SearchResultItem
+     * @memberof SearchResultItemID
      */
     readonly parent_ID: number;
 
@@ -121,8 +125,8 @@ export interface SearchResultItem {
      * Leave children implementation for another time
      * -- Warning: This looks dangerous. Have to sanitise, don't trust REST API
      * Schema allows different types of result items "story", "comment"
-     * @type {SearchResultItem[]}
-     * @memberof SearchResultItem
+     * @type {SearchResultItemID[]}
+     * @memberof SearchResultItemID
      */
-    readonly children: SearchResultItem[];
+    readonly children: SearchResultItemID[];
 }
