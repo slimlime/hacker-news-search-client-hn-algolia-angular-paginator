@@ -5,19 +5,32 @@
  * @Last Modified time: 2018-10-24 15: 16: 51
  */
 
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [
+import { SearchResultsComponent } from './components/search-results/search-results.component';
+
+const appRoutes: Routes = [
   {
-
+    path      : "",
+    redirectTo: "/search-results",
+    pathMatch : "full"
+  },
+  {
+    path     : "search-results",
+    component: SearchResultsComponent
   }
 ];
 @NgModule({
   imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: false } // - DEBUG: 
+    ), 
     CommonModule
   ],
+  exports     : [RouterModule],   // Exported for Angular router directives
   declarations: []
 })
 export class AppRoutingModule { }

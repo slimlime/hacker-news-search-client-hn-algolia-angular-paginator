@@ -1,3 +1,4 @@
+import { NewsSearchService } from './../../services/news-search.service';
 /*
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 09: 20: 02
@@ -14,9 +15,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchResultsComponent implements OnInit {
 
-  constructor() { }
+  constructor( public newsSearchService: NewsSearchService) { }
 
   ngOnInit() {
+
   }
 
 }
