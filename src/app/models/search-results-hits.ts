@@ -3,7 +3,7 @@ import { SearchResultByTopic } from './search-result-topic';
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 17: 58: 53
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-24 18: 14: 10
+ * @Last Modified time: 2018-10-25 05: 31: 37
  */
 
 /**
@@ -15,6 +15,9 @@ import { SearchResultByTopic } from './search-result-topic';
  * @interface SearchHits
  */
 export interface SearchHits {
+
+    readonly exhaustiveNbHits: boolean;
+
     /**
      * An array of the search result items that represent the stories/comments
      * and other possible hn article item types with their associated metadata.
@@ -23,4 +26,18 @@ export interface SearchHits {
      * @memberof SearchHits
      */
     readonly searchResultItems: SearchResultByTopic[];
+
+    readonly hitsPerPage: number;  // Default 20
+
+    readonly nbHits: number;  // Maybe total number of hits.
+
+    readonly nbPages: number;  // Total number of pages // soft limit 50 pages?
+
+    readonly page: number;  // Virtual page of REST API Search
+
+    readonly params: string;  // GET parameters verified.
+
+    readonly processingTimeMS: number  // REST API Processing time.
+    
+    readonly query: string;  // Query string
 }

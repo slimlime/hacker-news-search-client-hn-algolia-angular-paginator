@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 05: 24: 01
+ * @Last Modified time: 2018-10-25 05: 28: 35
  */
 import { Component, OnInit } from '@angular/core';
 
@@ -20,6 +20,7 @@ export class NewsReaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.newsSearchService.searchHNArticles("Deep Learning");
   }
 
 }
