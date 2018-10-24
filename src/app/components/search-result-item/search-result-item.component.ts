@@ -6,7 +6,7 @@
  */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { SearchResultByTopic } from '../../models/search-result-topic';
+import { SearchResultTopical } from '../../models/search-result-topic';
 
 @Component({
   selector   : 'app-search-result-item',
@@ -15,7 +15,7 @@ import { SearchResultByTopic } from '../../models/search-result-topic';
 })
 export class SearchResultItemComponent implements OnInit {
   @Input() 
-  searchResultItem: SearchResultByTopic;  // can intercept input get pty
+  searchResultItem: SearchResultTopical;  // can intercept input get pty
   @Output() 
   clickChange : EventEmitter<MouseEvent> = new EventEmitter();
 

@@ -2,9 +2,9 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 17: 58: 53
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 05: 52: 55
+ * @Last Modified time: 2018-10-25 08: 36: 02
  */
-import { SearchResultByTopic } from './search-result-topic';
+import { SearchResultTopical } from './search-result-topic';
 
 /**
  * Directly reflects the hn.algolia response from topical search API
@@ -28,10 +28,10 @@ export interface SearchHits {
      * An array of the search result items that represent the stories/comments
      * and other possible hn article item types with their associated metadata.
      * 
-     * @type {SearchResultByTopic[]}
+     * @type {SearchResultTopical[]}
      * @memberof SearchHits
      */
-    readonly searchResultItems: SearchResultByTopic[];
+    readonly searchResultItems: SearchResultTopical[];
 
     /**
      * Hacker News Algolia REST Search API recommended method for pagination.

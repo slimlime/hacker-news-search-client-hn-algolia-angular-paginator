@@ -24,9 +24,9 @@
  * -- TODO: Check query
  *
  * @export
- * @interface SearchResultByTopic
+ * @interface SearchResultTopical
  */
-export interface SearchResultByTopic {
+export interface SearchResultTopical {
 
     /**
      * Item creation ISO 8601-formatted datetime
@@ -34,7 +34,7 @@ export interface SearchResultByTopic {
      * types such as comment, poll, ask
      *
      * @type {string}
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly created_at: string;
 
@@ -42,7 +42,7 @@ export interface SearchResultByTopic {
      * Story title.
      *
      * @type {string}
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly title: string;
 
@@ -55,7 +55,7 @@ export interface SearchResultByTopic {
      *  Exclusive either url or story_url (story-associated comment) not both?
      * @see story_url
      * @type {string}
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly url: string;
 
@@ -63,7 +63,7 @@ export interface SearchResultByTopic {
      * Author username
      *
      * @type {string}
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly author: string;
 
@@ -71,7 +71,7 @@ export interface SearchResultByTopic {
      * Article up-/down-vote points
      *
      * @type {number}
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly points: number;
 
@@ -79,7 +79,7 @@ export interface SearchResultByTopic {
      * Some search results have story text
      * NOTE: Quirk returned blank string "" and null values for some results.
      * @type {string}
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly story_text: string;
 
@@ -87,7 +87,7 @@ export interface SearchResultByTopic {
      * Comment text body (if comment)
      *
      * @type {string}
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly comment_text: string;
 
@@ -95,7 +95,7 @@ export interface SearchResultByTopic {
      * Number of comments associated with the story.
      *
      * @type {number}
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly num_comments: number;
 
@@ -103,7 +103,7 @@ export interface SearchResultByTopic {
      * A comment's parent story_ID ? (null for an article)
      *
      * @type {number}
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly story_ID: number;
 
@@ -111,7 +111,7 @@ export interface SearchResultByTopic {
      *
      *
      * @type {number}
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly story_title: string;
 
@@ -119,21 +119,21 @@ export interface SearchResultByTopic {
      * A non-story item's story_url. (Stories have exclusive url attribute)
      *
      * @type {string}
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly story_url: string;
     /**
      * A comment's parent story or parent comment ID? (null for an article)
      *
      * @type {number}
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly parent_ID: number;
 
     /**
      * Epoch datetimestamp creation time integer.
      *
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly created_at_i: number;
 
@@ -143,7 +143,7 @@ export interface SearchResultByTopic {
      * * "comment" or item_type, "author_<author/username>", "story_<story_ID>"
      * * * Where <> angle brackets indicate the other associated attribute value
      * @type {string[]}
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly tags: string[];
 
@@ -152,7 +152,7 @@ export interface SearchResultByTopic {
      * This can be verified by using the hn.algolia item ID endpoint search.
      *
      * @type {string}
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly objectID: string;  // string id number for some reason
 
@@ -161,7 +161,7 @@ export interface SearchResultByTopic {
      * Highlights based on relevancy/matching score to searched keywords.
      * Title, Url, Author search results relevancy
      * @type {SearchItemTitle} ?? -- TODO: implement interface
-     * @memberof SearchResultByTopic
+     * @memberof SearchResultTopical
      */
     readonly highlightResult: any;  // -- TODO: nested object interface
 
