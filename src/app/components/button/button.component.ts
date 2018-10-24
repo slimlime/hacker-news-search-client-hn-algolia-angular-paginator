@@ -1,5 +1,12 @@
-import { NewsSearchService } from './../../services/news-search.service';
+/*
+ * @Author            : Samuel Lim
+ * @Date              : 2018-10-24 15: 09: 59
+ * @Last Modified by  : slimlime
+ * @Last Modified time: 2018-10-24 15: 10: 47
+ */
+
 import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector   : 'app-button',
@@ -8,12 +15,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ButtonComponent implements OnInit {
 
-  constructor(public newsSearchService: NewsSearchService) {
+  constructor() {
 
   }
 
   ngOnInit() {
   }
-
 
 }
