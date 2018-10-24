@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 15: 16: 15
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-24 15: 43: 33
+ * @Last Modified time: 2018-10-24 15: 46: 25
  */
 
 /**
@@ -18,6 +18,8 @@
  * instead of manual handling the implementation, buffering, loading etc.
  * * Can filter by condition on `created_at_i`, `points`, `num_comments`
  *
+ *
+
  * @export
  * @interface SearchResultByTopic
  */
@@ -33,26 +35,88 @@ export interface SearchResultByTopic {
      */
     readonly created_at: string;
 
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof SearchResultByTopic
+     */
     readonly title: string;
 
+    /**
+     *
+     * Quirky `hn algolia search` REST API http:   //hn.algolia.com/api/v1/search
+     *  Returns null story_url if directly searching for stories.
+     *  Exclusive either url or story_url (story-associated comment) not both?
+     * @see story_url
+     * @type {string}
+     * @memberof SearchResultByTopic
+     */
     readonly url: string;
 
     readonly author: string;
-    // Strange `hn algolia search` REST API http://hn.algolia.com/api/v1/search
-    // Returns null story_url if directly searching for stories.
-    // Exclusive either url or story_url (story-associated comment) not both?
+
+    /**
+     *
+     *
+     * @type {number}
+     * @memberof SearchResultByTopic
+     */
     readonly points: number;
 
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof SearchResultByTopic
+     */
     readonly story_text: string;
 
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof SearchResultByTopic
+     */
     readonly comment_text: string;
 
+    /**
+     *
+     *
+     * @type {number}
+     * @memberof SearchResultByTopic
+     */
     readonly num_comments: number;
 
+    /**
+     *
+     *
+     * @type {number}
+     * @memberof SearchResultByTopic
+     */
     readonly story_ID: number;
 
-    readonly story_title: number;
+    /**
+     *
+     *
+     * @type {number}
+     * @memberof SearchResultByTopic
+     */
+    readonly story_title: string;
 
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof SearchResultByTopic
+     */
+    readonly story_url: string;
+    /**
+     *
+     *
+     * @type {number}
+     * @memberof SearchResultByTopic
+     */
     readonly parent_ID: number;
 
     /**
@@ -62,8 +126,20 @@ export interface SearchResultByTopic {
      */
     readonly created_at_i: number;
 
+    /**
+     *
+     *
+     * @type {string[]}
+     * @memberof SearchResultByTopic
+     */
     readonly tags: string[];
 
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof SearchResultByTopic
+     */
     readonly objectID: string;  // string id number for some reason
 
     /**
