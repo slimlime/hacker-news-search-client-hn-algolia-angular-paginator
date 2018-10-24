@@ -4,7 +4,7 @@ import { URL } from "url";
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 09: 02: 16
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-24 09: 56: 23
+ * @Last Modified time: 2018-10-24 10: 06: 31
  */
 
 /**
@@ -57,8 +57,8 @@ export interface SearchResultItem {
 
     // children? Each comment counts as an item? Number of comments? Related stories?
     /**
-     * 
-     * -- Warning: This looks dangerous.
+     * Leave children implementation for another time
+     * -- Warning: This looks dangerous. Have to sanitise, don't trust REST API
      *
      * @type {SearchResultItem[]}
      * @memberof SearchResultItem
