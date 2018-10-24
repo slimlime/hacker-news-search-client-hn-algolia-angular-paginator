@@ -14,14 +14,15 @@ import { SearchResultTopical } from '../../models/search-result-topic';
   styleUrls  : ['./search-result-item.component.css']
 })
 export class SearchResultItemComponent implements OnInit {
-  @Input() 
-  searchResultItem: SearchResultTopical;  // can intercept input get pty
-  @Output() 
-  clickChange : EventEmitter<MouseEvent> = new EventEmitter();
+  @Input () searchResultItem: SearchResultTopical;                            // can intercept input get pty
+  @Output() clickChange     : EventEmitter<MouseEvent> = new EventEmitter();
 
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit() {
+    
   }
 
   onClick(event: MouseEvent) {
