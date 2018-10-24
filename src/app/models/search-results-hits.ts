@@ -1,10 +1,10 @@
-import { SearchResultByTopic } from './search-result-topic';
 /*
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 17: 58: 53
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 05: 39: 02
+ * @Last Modified time: 2018-10-25 05: 52: 55
  */
+import { SearchResultByTopic } from './search-result-topic';
 
 /**
  * Directly reflects the hn.algolia response from topical search API
