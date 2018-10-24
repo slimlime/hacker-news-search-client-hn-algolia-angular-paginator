@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { SearchResultItemComponent } from './components/search-result-item/search-result-item.component';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
+import { AppRoutingModule } from './/app-routing.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { SearchResultsComponent } from './components/search-results/search-resul
     SearchResultsComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
