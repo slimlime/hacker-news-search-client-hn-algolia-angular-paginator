@@ -3,13 +3,17 @@ import { SearchHits } from './../models/search-results-hits';
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 19: 01: 06
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 05: 49: 46
+ * @Last Modified time: 2018-10-25 07: 56: 04
  */
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { debounceTime, 
+  distinctUntilChanged,
+  map,
+  switchMap
+} from 'rxjs/operators';
 
 
 /**
@@ -45,11 +49,31 @@ export class NewsSearchService {
     
   }
 
+  searchRealtimeValidated(searchInputsObs: Observable<string>): Observable<SearchHits> {
+    return searchInputsObs.pipe(
+      // Milliseconds to wait until input is stable.
+      debounceTime(400),
+      
+      // Distinct topic search terms only.
+      distinctUntilChanged(),
+
+      // Discards results of prev outdated emissions. New input for GET call. 
+      // Maintains most recent Observable.
+      switchMap(searchInputTopic => {
+        const searchHNObservable = this.searchHNArticles(searchInputTopic);
+        return searchHNObservable;
+      })
+      
+    );
+
+  }
 
   /**
    * Searches for Hacker News articles using the Algolia REST Search API
    * 
+   * Not private in case AOT compile
    * No rate safety in-built? 
+   * Rate-limiter in NewsSearchService instead of UI searchbar component
    * Return Observable for subscribing at the top component.
    * Always bubble reactivity as high up as possible.
    * @param {string} searchInput topic keywords
