@@ -2,11 +2,9 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 15: 11: 23
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 08: 16: 32
+ * @Last Modified time: 2018-10-25 08: 23: 15
  */
-import { Component, OnInit } from '@angular/core';
-
-import { NewsSearchService } from './../../services/news-search.service';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector   : 'app-input-search-bar',
@@ -14,9 +12,10 @@ import { NewsSearchService } from './../../services/news-search.service';
   styleUrls  : ['./input-search-bar.component.css']
 })
 export class InputSearchBarComponent implements OnInit {
-
   // @Input @Output vs Shared singleton reactive service. References issue #18
-  constructor( public newsSearchService: NewsSearchService) {
+  @Output() searchTopic: EventEmitter<string> = new EventEmitter<string>();
+
+  constructor() {
 
   }
 
@@ -25,7 +24,7 @@ export class InputSearchBarComponent implements OnInit {
   }
 
   /**
-   * 
+   * Functionality for respond to input events for searching.
    *
    * @param {KeyboardEvent} event typecast info for input and event properties.
    * @memberof InputSearchBarComponent
@@ -33,9 +32,12 @@ export class InputSearchBarComponent implements OnInit {
   onSearchInput(inputKeyEvent: KeyboardEvent) {
     console.log('​InputSearchBarComponent:: onSearchInput() -> inputKeyEvent', inputKeyEvent);
     const searchInputElementTarget: HTMLInputElement = <HTMLInputElement>inputKeyEvent.target;  // preserving type information
-    const searchInputTopic: string                   = searchInputElementTarget.value;
+    // Get the user's search input
+    const searchInputTopic: string = searchInputElementTarget.value;
     
     console.log('​InputSearchBarComponent:: onSearchInput() -> searchInput', searchInputTopic);
 
+
+    return searchInputTopic // Not necessary
   }
 }
