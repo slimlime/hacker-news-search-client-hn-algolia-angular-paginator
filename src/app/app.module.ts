@@ -15,6 +15,7 @@ import { ButtonComponent } from './components/button/button.component';
 import { InputSearchBarComponent } from './components/input-search-bar/input-search-bar.component';
 import { SearchResultItemComponent } from './components/search-result-item/search-result-item.component';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
+import { NewsReaderComponent } from './components/news-reader/news-reader.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { SearchResultsComponent } from './components/search-results/search-resul
     SearchResultItemComponent,
     SearchResultsComponent,
     InputSearchBarComponent,
-    ButtonComponent
+    ButtonComponent,
+    NewsReaderComponent
   ],
   imports: [
     BrowserModule,
