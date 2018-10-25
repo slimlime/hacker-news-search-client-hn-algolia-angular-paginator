@@ -6,7 +6,7 @@
   <h4>Hacker News search feed</h4>
   <!-- Dumb components mainly concerned with presentation formatting -->
   <!-- Data, state management all in top level news-reader component+service -->
-  <ul class="search-results">
+  <ul  *ngIf="(searchResults)" class="search-results">
     <!-- ngIf quick method to prevent the null load default initialisation -->
     <!-- - TODO: Replace later with some progress, indication, skeleton -->
 
