@@ -3,7 +3,7 @@ import { NewsSearchOpts } from './news-search.service';
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 19: 01: 06
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-26 05: 36: 12
+ * @Last Modified time: 2018-10-26 05: 39: 48
  */
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -103,15 +103,22 @@ export class NewsSearchService {
     return newsSearchingOptsObs;
   }
 
-  searchRealtimeReactiveInputQuery(
-    searchInputObs    : Observable<string>,
-    searchQueryOptsObs: Observable<NewsSearchOpts>
+  /**
+   * Manages reactive streams from user search input and additional params.
+   *
+   * @param {Observable<string>} searchInputObs
+   * @param {Observable<NewsSearchOpts>} searchQueryPagerObs
+   * @memberof NewsSearchService
+   */
+  searchRealtimeReactiveInputPager(
+    searchInputObs     : Observable<string>,
+    searchQueryPagerObs: Observable<NewsSearchOpts>
   ) {
 
     // Combine query input reactive streams
     const newsSearchOptsComboObs: Observable<[string, NewsSearchOpts]> = combineLatest(
       searchInputObs,
-      searchQueryOptsObs
+      searchQueryPagerObs
     );
 
 
