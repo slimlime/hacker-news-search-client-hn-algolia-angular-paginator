@@ -3,7 +3,7 @@ import { PageTrack, ButtonConfig } from './../button/button.component';
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 20: 01: 02
+ * @Last Modified time: 2018-10-25 20: 22: 47
  */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, ParamMap } from '@angular/router';
@@ -48,6 +48,7 @@ export class NewsReaderComponent implements OnInit {
    * Template async binding to the observable returned here.
    * Feels clunky testing new techniques.
    * 
+   * Probs encapsulate a clearer factory.
    * @param {*} param
    * @returns {Observable<PageTrack>}
    * @memberof NewsReaderComponent
@@ -56,16 +57,17 @@ export class NewsReaderComponent implements OnInit {
     const pageTrackObs: Observable<PageTrack> = routerParamMap.pipe(
       map((params: Params) => {
         console.log('​NewsReaderComponent:: params', params);
-        const pageNumber: number      = params.get("pageNumber");
+        const pageNumber: number = params.get("pageNumber");
+        console.log('​NewsReaderComponent:: current pageNumber', pageNumber);
         const pageTrackOpt: PageTrack = {
-          navType       : ButtonConfig.Forward,
+          navType       : ButtonConfig.Next,
           currentPageNum: pageNumber,
           totalNumPages : 49
         };
         return pageTrackOpt;
       })
     )
-    pageTrackObs.subscribe(data => console.log(data))
+
     return pageTrackObs;
   }
   /**

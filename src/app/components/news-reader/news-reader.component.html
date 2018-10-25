@@ -7,6 +7,7 @@
 <app-search-results [searchResults]="news$ | async"></app-search-results>
 
 <!-- - TODO: Add bindings -->
+<!-- Trying funky Angular template technique for fun -->
 <app-button *ngIf="this.activatedRoute.paramMap" [pageTrack]="(this.setupNavComponentOptions(this.activatedRoute.paramMap) | async)"></app-button>
 Page
 <app-button [pageTrack]="(this.activatedRoute.paramMap  | async).get('pageNumber') "></app-button>

@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 15: 09: 59
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 19: 59: 34
+ * @Last Modified time: 2018-10-25 20: 22: 26
  */
 
 import { Component, Input, OnInit } from '@angular/core';
@@ -14,13 +14,13 @@ import { Router } from '@angular/router';
  * @enum 
  */
 export enum ButtonConfig {
-  Back    = "back",
-  Forward = "forward"
+  Previous = "Previous",
+  Next     = "Next"
 }
 
 export enum PageNavStep {
-  Back    = -1,
-  Forward = 1
+  Previous = -1,
+  Next     = 1
 }
 export interface PageTrack {
   readonly currentPageNum: number,
@@ -52,9 +52,9 @@ export class ButtonComponent implements OnInit {
    * @memberof ButtonComponent
    */
   onPageNavButton(router: Router, pageTrack: PageTrack) {
-    
-    const buttonNavType    = pageTrack.navType;                // e.g. back/forwards button
-    const pageStep: number = this.getPageStep(buttonNavType);
+    // Hacky +prepend TypeScript number type not consistent in JavaScript. Concatenate digits bug.
+    const buttonNavType    = pageTrack.navType;                 // e.g. back/forwards button
+    const pageStep: number = +this.getPageStep(buttonNavType);
     console.log('​ButtonComponent:: onPageNavButton() -> pageStep', pageStep);
     const pageNavNum: number = this.pageNumWrapAroundCheck(pageStep, pageTrack);
     console.log('​ButtonComponent:: onPageNavButton() -> pageNavNum', pageNavNum);
@@ -73,14 +73,14 @@ export class ButtonComponent implements OnInit {
   getPageStep(navType: ButtonConfig): number {
     // Playing around with enum and switch for fun.
     switch(navType) {
-      case ButtonConfig.Back: {
-        return PageNavStep.Back;
+      case ButtonConfig.Previous: {
+        return PageNavStep.Previous;
       }
-      case ButtonConfig.Forward: {
-        return PageNavStep.Forward;
+      case ButtonConfig.Next: {
+        return PageNavStep.Next;
       }
       default: {
-        return PageNavStep.Forward;
+        return PageNavStep.Next;
       }
     }
   }
@@ -90,10 +90,11 @@ export class ButtonComponent implements OnInit {
    * @memberof ButtonComponent
    */
   pageNumWrapAroundCheck(pageStep: number, pageTrack: PageTrack): number {
-    const pageNum = pageTrack.currentPageNum
-      console.log('​ButtonComponent:: pageNum', pageNum);
-      // - TODO: Check if page num 0, 1
-    const newPageNumber = ((pageNum + pageStep) >= 0) ? (pageNum + pageStep) : 0;
+    const pageNum: number = +(pageTrack.currentPageNum)
+    console.log('​ButtonComponent:: pageNum', pageNum, pageNum+pageStep);
+    // - TODO: Check if page num 0, 1
+    // Careful. TypeScript number type doesn't assert in JavaScript...
+    const newPageNumber: number = ((pageNum + pageStep) >= 0) ? (pageNum + pageStep) : 0;
     console.log('​ButtonComponent:: newPageNumber', newPageNumber);
 
     return newPageNumber;
