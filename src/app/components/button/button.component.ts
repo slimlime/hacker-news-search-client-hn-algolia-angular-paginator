@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 15: 09: 59
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 20: 22: 26
+ * @Last Modified time: 2018-10-25 22: 38: 31
  */
 
 import { Component, Input, OnInit } from '@angular/core';
@@ -55,9 +55,9 @@ export class ButtonComponent implements OnInit {
     // Hacky +prepend TypeScript number type not consistent in JavaScript. Concatenate digits bug.
     const buttonNavType    = pageTrack.navType;                 // e.g. back/forwards button
     const pageStep: number = +this.getPageStep(buttonNavType);
-    console.log('​ButtonComponent:: onPageNavButton() -> pageStep', pageStep);
+    // console.log('​ButtonComponent:: onPageNavButton() -> pageStep', pageStep);
     const pageNavNum: number = this.pageNumWrapAroundCheck(pageStep, pageTrack);
-    console.log('​ButtonComponent:: onPageNavButton() -> pageNavNum', pageNavNum);
+    // console.log('​ButtonComponent:: onPageNavButton() -> pageNavNum', pageNavNum);
     
     router.navigate(['/news-reader', pageNavNum]) // - TODO: Clean up magic string literals
     // exports, constants, compile dev info.
@@ -91,7 +91,7 @@ export class ButtonComponent implements OnInit {
    */
   pageNumWrapAroundCheck(pageStep: number, pageTrack: PageTrack): number {
     const pageNum: number = +(pageTrack.currentPageNum)
-    console.log('​ButtonComponent:: pageNum', pageNum, pageNum+pageStep);
+    // console.log('​ButtonComponent:: pageNum', pageNum, pageNum+pageStep);
     // - TODO: Check if page num 0, 1
     // Careful. TypeScript number type doesn't assert in JavaScript...
     const newPageNumber: number = ((pageNum + pageStep) >= 0) ? (pageNum + pageStep) : 0;

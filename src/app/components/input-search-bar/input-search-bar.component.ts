@@ -30,12 +30,12 @@ export class InputSearchBarComponent implements OnInit {
    * @memberof InputSearchBarComponent
    */
   onSearchInput(inputKeyEvent: KeyboardEvent) {
-    console.log('​InputSearchBarComponent:: onSearchInput() -> inputKeyEvent', inputKeyEvent);
+    // console.log('​InputSearchBarComponent:: onSearchInput() -> inputKeyEvent', inputKeyEvent);
     const searchInputElementTarget: HTMLInputElement = <HTMLInputElement>inputKeyEvent.target;  // preserving type information
     // Get the user's search input
     const searchInputTopic: string = searchInputElementTarget.value;
     
-    console.log('​InputSearchBarComponent:: onSearchInput() -> searchInput', searchInputTopic);
+    // console.log('​InputSearchBarComponent:: onSearchInput() -> searchInput', searchInputTopic);
 
     this.searchTopic.emit(searchInputTopic);
     return searchInputTopic; // Not necessary
