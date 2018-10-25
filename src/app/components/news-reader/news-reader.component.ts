@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 22: 58: 10
+ * @Last Modified time: 2018-10-26 05: 40: 25
  */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Params } from '@angular/router';
@@ -10,7 +10,7 @@ import { Observable, Subject } from 'rxjs';
 import { map, mergeAll } from 'rxjs/operators';
 
 import { SearchHits } from './../../models/search-results-hits';
-import { NewsSearchOpts, NewsSearchService } from './../../services/news-search.service';
+import { string, NewsSearchService } from './../../services/news-search.service';
 import { ButtonConfig, PageTrack } from './../button/button.component';
 
 @Component({
@@ -24,7 +24,7 @@ export class NewsReaderComponent implements OnInit {
   searchInputSubject$: Subject<string> = new Subject<string>();
 
   // Over-engineered = buggy
-  searchQuerySubject$: Subject<NewsSearchOpts> = new Subject<NewsSearchOpts>();
+  searchQuerySubject$: Subject<string> = new Subject<string>();
 
   currentPageNumber: string = "0";
 
@@ -115,7 +115,7 @@ export class NewsReaderComponent implements OnInit {
   setupNewsSubscriptionSource(
     newsSearchService  : NewsSearchService,
     searchInputSubject$: Subject<string>,
-    searchQuerySubject$: Subject<NewsSearchOpts>,
+    searchQuerySubject$: Subject<string>,
     pageNumberParam    : string
     )                  : Observable<SearchHits> {
 
