@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 14: 58: 40
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 16: 43: 47
+ * @Last Modified time: 2018-10-25 16: 45: 16
  */
 
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,7 @@ import { NewsReaderComponent } from './components/news-reader/news-reader.compon
 const appRoutes: Routes = [
   {
     path      : "",
-    redirectTo: "/news-reader/1",
+    redirectTo: "/news-reader/1",   // Literal value. Cannot use placeholder param
     pathMatch : "full"
   },
   {
