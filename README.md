@@ -1,5 +1,6 @@
 # HackerNewsSearchClientHNAlgoliaAngularPaginator
 
+**WIP**
 Live demo available at [`slimlime.github.io/hacker-news-search-client-hn-algolia-angular-paginator`](https://slimlime.github.io/hacker-news-search-client-hn-algolia-angular-paginator/)
 
 A Hacker News (HN) search client in Angular using the [HN Search API powered by Algolia](https://hn.algolia.com/api).
