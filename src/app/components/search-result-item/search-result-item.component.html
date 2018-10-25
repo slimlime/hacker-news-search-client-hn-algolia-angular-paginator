@@ -1,11 +1,12 @@
-<p>
-  search-result-item works!
-</p>
 <div id="search-result-item-details">
-  {{searchResultItem.points}}
-  {{searchResultItem.title}}
-  {{searchResultItem.highlightResult}}
-  {{searchResultItem.tags}}
-  {{searchResultItem.url}}
-  {{searchResultItem.objectID}}
+  <span *ngIf="searchResultItem.points" >{{searchResultItem.points}} points </span>
+
+  <a *ngIf="searchResultItem.title" class="search-item-title" href={{searchResultItem.url}}>{{searchResultItem.title}} </a>
+
+  <span *ngIf="searchResultItem.highlightResult" class="highlightSearchResult">{{searchResultItem.highlightResult}}</span>
+
+  <span *ngIf="searchResultItem.tags">{{searchResultItem.tags}}</span>
+
+  <span *ngIf="searchResultItem.objectID">ID: {{searchResultItem.objectID}} </span>
+  
 </div>
