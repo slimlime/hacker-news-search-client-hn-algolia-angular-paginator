@@ -1,8 +1,9 @@
+import { NewsSearchOpts } from './news-search.service';
 /*
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 19: 01: 06
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 22: 43: 44
+ * @Last Modified time: 2018-10-26 05: 36: 12
  */
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -100,6 +101,46 @@ export class NewsSearchService {
     );
 
     return newsSearchingOptsObs;
+  }
+
+  searchRealtimeReactiveInputQuery(
+    searchInputObs    : Observable<string>,
+    searchQueryOptsObs: Observable<NewsSearchOpts>
+  ) {
+
+    // Combine query input reactive streams
+    const newsSearchOptsComboObs: Observable<[string, NewsSearchOpts]> = combineLatest(
+      searchInputObs,
+      searchQueryOptsObs
+    );
+
+
+    const newsSearchResultsObs: Observable<SearchHits> = newsSearchOptsComboObs
+      .pipe(
+        // Rate-limiters
+        // Milliseconds to wait until inputs are stable.
+        debounceTime(400),
+
+        // Distinct terms + query params only -- to call search. 
+        distinctUntilChanged(),
+
+        // Discards results of prev outdated emissions. New input for GET call. 
+        // Maintains most recent Observable.
+        switchMap(([userInput, pageQuery]: [string, NewsSearchOpts]) => {
+          console.log('​NewsSearchService:: userInput', userInput);
+          console.log('​NewsSearchService:: pageQuery', pageQuery);
+
+          const pageNum = pageQuery.pageNum;
+          
+          const searchHNObs: Observable<SearchHits> = this.searchHNArticles(
+            userInput,
+            pageNum
+          );
+
+          return searchHNObs;
+        })
+      )
+
   }
   /**
    * If already have an Observable/Subject set up emitting, easy just plug it 
