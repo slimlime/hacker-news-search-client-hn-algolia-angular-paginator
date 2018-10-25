@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 14: 58: 40
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-24 15: 16: 51
+ * @Last Modified time: 2018-10-25 10: 26: 38
  */
 
 import { CommonModule } from '@angular/common';
@@ -26,8 +26,11 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: false } // - DEBUG: 
-    ), 
+      {
+        enableTracing: false,   // - DEBUG: 
+        useHash      : true
+      } 
+    ),
     CommonModule
   ],
   exports     : [RouterModule],   // Exported for Angular router directives
