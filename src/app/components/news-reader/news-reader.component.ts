@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 14: 37: 23
+ * @Last Modified time: 2018-10-25 14: 39: 48
  */
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
@@ -47,10 +47,10 @@ export class NewsReaderComponent implements OnInit {
    * @param {string} searchTopic
    * @memberof NewsReaderComponent
    */
-  onUserSearchInput(searchTopic: string, searchInputSubject: Subject<string>): void {
+  onUserSearchInput(searchTopic: string, searchInputSubject$: Subject<string>): void {
     console.log('​NewsReaderComponent:: onUserSearchInput -> searchTopic', searchTopic);
 
-    searchInputSubject.next(searchTopic); // Feels hacky/suboptimal
+    searchInputSubject$.next(searchTopic); // Feels hacky/suboptimal
 
   }
 }

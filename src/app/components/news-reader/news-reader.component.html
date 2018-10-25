@@ -2,7 +2,7 @@
   news-reader works!
 </p>
 
-<app-input-search-bar (searchTopic)="onUserSearchInput($event, this.searchInputSubject)"> </app-input-search-bar>
+<app-input-search-bar (searchTopic)="onUserSearchInput($event, this.searchInputSubject$)"> </app-input-search-bar>
 
 <app-search-results [searchResults]="news$ | async"></app-search-results>
 
