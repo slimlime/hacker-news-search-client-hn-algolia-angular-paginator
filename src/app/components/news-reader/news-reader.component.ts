@@ -3,7 +3,7 @@ import { PageTrack, ButtonConfig } from './../button/button.component';
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 20: 22: 47
+ * @Last Modified time: 2018-10-25 20: 33: 27
  */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, ParamMap } from '@angular/router';
@@ -47,29 +47,49 @@ export class NewsReaderComponent implements OnInit {
    * Transform param pagenum observable to take in page config test
    * Template async binding to the observable returned here.
    * Feels clunky testing new techniques.
+   * -- TODO: : fire: refactor
    * 
    * Probs encapsulate a clearer factory.
    * @param {*} param
    * @returns {Observable<PageTrack>}
    * @memberof NewsReaderComponent
    */
-  setupNavComponentOptions(routerParamMap: Observable<ParamMap>): Observable<PageTrack> {
+  setupNavComponentOptions(
+    routerParamMap: Observable<ParamMap>,
+    navType       : ButtonConfig
+    )             : Observable<PageTrack> {
+    // 
     const pageTrackObs: Observable<PageTrack> = routerParamMap.pipe(
       map((params: Params) => {
         console.log('​NewsReaderComponent:: params', params);
         const pageNumber: number = params.get("pageNumber");
-        console.log('​NewsReaderComponent:: current pageNumber', pageNumber);
-        const pageTrackOpt: PageTrack = {
-          navType       : ButtonConfig.Next,
-          currentPageNum: pageNumber,
-          totalNumPages : 49
-        };
-        return pageTrackOpt;
+
+        const pageTrackOptions: PageTrack = this.setupPageTrack(
+          navType, 
+          pageNumber, 
+          50 // - TODO: placeholder totalNumPage until forkjoin other news$
+        ); 
+        console.log('​NewsReaderComponent:: pageTrackOptions', pageTrackOptions);
+
+        return pageTrackOptions;
       })
     )
 
     return pageTrackObs;
   }
+
+  setupPageTrack(navType: ButtonConfig,
+    pageNum      : number,
+    totalNumPages: number
+    )            : PageTrack {
+    const pageTrackOptions: PageTrack = {
+      navType       : navType,
+      currentPageNum: pageNum,
+      totalNumPages : totalNumPages
+    };
+    return pageTrackOptions;
+  }
+
   /**
    * 
    *
