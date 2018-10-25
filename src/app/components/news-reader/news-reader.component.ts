@@ -2,10 +2,10 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 14: 39: 48
+ * @Last Modified time: 2018-10-25 16: 20: 09
  */
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 
 import { SearchHits } from './../../models/search-results-hits';
 import { NewsSearchService } from './../../services/news-search.service';
@@ -27,16 +27,37 @@ export class NewsReaderComponent implements OnInit {
 
   ngOnInit() {
 
+    // Set up news feed reactive data source
+    this.news$ = this.setupNewsSubscriptionSource(this.newsSearchService);
+  }
+
+
+  /**
+   * 
+   *
+   * @param {Observable<SearchHits>} news$
+   * @param {NewsSearchService} newsSearchService
+   * @memberof NewsReaderComponent
+   */
+  setupNewsSubscriptionSource(
+    newsSearchService: NewsSearchService
+    )                : Observable<SearchHits> {
+
     // Setup/subscribe to reactive news search results.
+    // Prepare reactivity into news search service for user input as they occur.
     const searchObs: Observable<SearchHits> = this.newsSearchService
       .searchRealtimeValidated(this.searchInputSubject$)
     ;
-    this.news$ = searchObs;
 
-    searchObs.subscribe((searchResults: SearchHits) => 
+
+    const searchSubscription: Subscription = searchObs.subscribe((searchResults: SearchHits) =>
       console.log('​NewsReaderComponent:: ngOnInit -> searchResults number of hits', searchResults.hits)
     );
 
+    // Return the reactive data source    // Assign the reactive data source
+    // news$ = searchObs;
+    return searchObs;
+    // return searchSubscription // unused.
   }
 
   /**
@@ -45,6 +66,7 @@ export class NewsReaderComponent implements OnInit {
    * 
    * @example this.onUserSearchInput("Deep Learning", this.searchInputSubject);
    * @param {string} searchTopic
+   * @param {Subject<string>} searchInputSubject$
    * @memberof NewsReaderComponent
    */
   onUserSearchInput(searchTopic: string, searchInputSubject$: Subject<string>): void {
