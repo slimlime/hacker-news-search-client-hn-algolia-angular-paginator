@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 16: 36: 48
+ * @Last Modified time: 2018-10-25 16: 55: 14
  */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -32,7 +32,8 @@ export class NewsReaderComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(
       (params: Params) => {
-        console.log('​NewsReaderComponent:: ngOnInit() -> params', params);
+        const pageNumber = params.get("pageNumber");
+        console.log('​NewsReaderComponent:: ngOnInit() -> pageNumber', pageNumber);
       }
     )
     // Set up news feed reactive data source
