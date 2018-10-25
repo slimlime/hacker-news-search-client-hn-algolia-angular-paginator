@@ -3,7 +3,7 @@ import { SearchHits } from './../models/search-results-hits';
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 19: 01: 06
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 14: 38: 15
+ * @Last Modified time: 2018-10-25 21: 06: 41
  */
 
 import { Injectable } from '@angular/core';
@@ -39,6 +39,16 @@ export class NewsSearchService {
   readonly baseSearchHNAlgoliaUrl: string = "https://hn.algolia.com/api/v1/search";
 
   readonly searchUrlParamKey: string = "query"
+
+  /**
+   * NOTE: - IMPORTANT: Empirically discovered hn algolia hard limit first *1000 hits*
+   * Depends on REST API configuration on their side, or use browse method.
+   * Page limit of 50 with 20 standard rows corresponds to this limit.
+   * `https://www.algolia.com/doc/faq/index-configuration/how-can-i-retrieve-all-the-records-in-my-index`
+   * @type {string}
+   * @memberof NewsSearchService
+   */
+  readonly searchUrlPageParamKey: string = "page";
 
   /**
    * Creates an instance of NewsSearchService.
