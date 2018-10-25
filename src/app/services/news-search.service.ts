@@ -42,6 +42,12 @@ export class NewsSearchService {
    */
   readonly baseSearchHNAlgoliaUrl: string = "https://hn.algolia.com/api/v1/search";
 
+  /**
+   * Key value query parameter for search API
+   *
+   * @type {string}
+   * @memberof NewsSearchService
+   */
   readonly searchUrlParamKey: string = "query"
 
   /**
@@ -154,12 +160,13 @@ export class NewsSearchService {
     // Debounce and distinct to prevent unnecessary DOS.
 
     // 1. First build the http parameters for the search query. GET
-    const searchParamValue: string = searchInput;  // strings are passed by value anyway.
-    // Immutable. Using this. properties that are readonly instead of local const
-    const httpSearchParams: HttpParams = new HttpParams()
-      .set(this.searchUrlParamKey, searchParamValue)
-      .set(this.searchUrlPageParamKey, pageNumber)
-    ;
+    
+    const httpSearchParams: HttpParams = this.getHttpParams(
+      searchInput,
+      pageNumber
+    );
+    console.log('​NewsSearchService:: httpSearchParams', httpSearchParams);
+    
     // Set up the httpClient options object (No interface provided)
     // 2. Set up the observable to receive the news results
     /** 
@@ -167,11 +174,28 @@ export class NewsSearchService {
      * Options object parameter doesn't have an interface in Angular :sad: 
      */
     const newsObservable: Observable<any> = this.httpClient.get( 
-      this.baseSearchHNAlgoliaUrl, {params: httpSearchParams}
+      this.baseSearchHNAlgoliaUrl, 
+      {params: httpSearchParams}
     );
 
 
     return newsObservable;
   }
 
+  /**
+   * Utility function to build httpSearchParam
+   * Accesses immutable reaonly parameter key values
+   *
+   * @param {string} searchInput
+   * @param {string} pageNumber
+   * @returns {HttpParams}
+   * @memberof NewsSearchService
+   */
+  getHttpParams(searchInput: string, pageNumber: string): HttpParams {
+    const httpSearchParams: HttpParams = new HttpParams()
+      .set(this.searchUrlParamKey, searchInput)
+      .set(this.searchUrlPageParamKey, pageNumber)
+    ;
+    return httpSearchParams;
+  }
 }
