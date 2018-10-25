@@ -1,4 +1,10 @@
 <p>
   button works!
 </p>
-<button disabled> Test button </button>
+
+<button 
+  (click)="onPageNavButton(this.router, this.pageTrack)"
+> 
+  {{this.pageTrack.navType}} button
+
+</button>

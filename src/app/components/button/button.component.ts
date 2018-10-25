@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 15: 09: 59
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 17: 46: 23
+ * @Last Modified time: 2018-10-25 19: 59: 34
  */
 
 import { Component, Input, OnInit } from '@angular/core';
@@ -10,19 +10,19 @@ import { Router } from '@angular/router';
 
 /**
  * 
- *
+ * -- TODO Refactory
  * @enum 
  */
-enum ButtonConfig {
+export enum ButtonConfig {
   Back    = "back",
   Forward = "forward"
 }
 
-enum PageNavStep {
+export enum PageNavStep {
   Back    = -1,
   Forward = 1
 }
-interface PageTrack {
+export interface PageTrack {
   readonly currentPageNum: number,
   readonly totalNumPages : number,
   readonly navType       : ButtonConfig
@@ -41,7 +41,7 @@ export class ButtonComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('​ButtonComponent:: ngOnInit() -> pageTrack', this.pageTrack);
+    console.log('​ButtonComponent:: ngOnInit() -> pageTrack', JSON.stringify(this.pageTrack));
   }
 
   /**
@@ -53,10 +53,12 @@ export class ButtonComponent implements OnInit {
    */
   onPageNavButton(router: Router, pageTrack: PageTrack) {
     
-    const buttonNavType      = pageTrack.navType;                                 // e.g. back/forwards button
-    const pageStep: number   = this.getPageStep(buttonNavType);
+    const buttonNavType    = pageTrack.navType;                // e.g. back/forwards button
+    const pageStep: number = this.getPageStep(buttonNavType);
+    console.log('​ButtonComponent:: onPageNavButton() -> pageStep', pageStep);
     const pageNavNum: number = this.pageNumWrapAroundCheck(pageStep, pageTrack);
-
+    console.log('​ButtonComponent:: onPageNavButton() -> pageNavNum', pageNavNum);
+    
     router.navigate(['/news-reader', pageNavNum]) // - TODO: Clean up magic string literals
     // exports, constants, compile dev info.
   }
@@ -64,11 +66,11 @@ export class ButtonComponent implements OnInit {
   /**
    * Page step logic
    *
-   * @param {string} navType
+   * @param {ButtonConfig} navType
    * @returns {number}
    * @memberof ButtonComponent
    */
-  getPageStep(navType: string): number {
+  getPageStep(navType: ButtonConfig): number {
     // Playing around with enum and switch for fun.
     switch(navType) {
       case ButtonConfig.Back: {
@@ -89,8 +91,10 @@ export class ButtonComponent implements OnInit {
    */
   pageNumWrapAroundCheck(pageStep: number, pageTrack: PageTrack): number {
     const pageNum = pageTrack.currentPageNum
+      console.log('​ButtonComponent:: pageNum', pageNum);
       // - TODO: Check if page num 0, 1
-    const newPageNumber = ((pageNum + pageStep) > 0) ? (pageNum + pageStep) : 0;
+    const newPageNumber = ((pageNum + pageStep) >= 0) ? (pageNum + pageStep) : 0;
+    console.log('​ButtonComponent:: newPageNumber', newPageNumber);
 
     return newPageNumber;
   }

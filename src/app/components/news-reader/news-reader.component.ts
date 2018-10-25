@@ -1,13 +1,14 @@
+import { PageTrack, ButtonConfig } from './../button/button.component';
 /*
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 16: 55: 14
+ * @Last Modified time: 2018-10-25 20: 01: 02
  */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, ParamMap } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
-
+import { map } from 'rxjs/operators';
 import { SearchHits } from './../../models/search-results-hits';
 import { NewsSearchService } from './../../services/news-search.service';
 
@@ -23,6 +24,7 @@ export class NewsReaderComponent implements OnInit {
 
   searchInputSubject$: Subject<string> = new Subject<string>();
 
+  buttonNav
   constructor( 
     public activatedRoute   : ActivatedRoute,
     public newsSearchService: NewsSearchService) {
@@ -30,6 +32,7 @@ export class NewsReaderComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.activatedRoute.paramMap.subscribe(
       (params: Params) => {
         const pageNumber = params.get("pageNumber");
@@ -40,7 +43,31 @@ export class NewsReaderComponent implements OnInit {
     this.news$ = this.setupNewsSubscriptionSource(this.newsSearchService);
   }
 
-
+  /**
+   * Transform param pagenum observable to take in page config test
+   * Template async binding to the observable returned here.
+   * Feels clunky testing new techniques.
+   * 
+   * @param {*} param
+   * @returns {Observable<PageTrack>}
+   * @memberof NewsReaderComponent
+   */
+  setupNavComponentOptions(routerParamMap: Observable<ParamMap>): Observable<PageTrack> {
+    const pageTrackObs: Observable<PageTrack> = routerParamMap.pipe(
+      map((params: Params) => {
+        console.log('​NewsReaderComponent:: params', params);
+        const pageNumber: number      = params.get("pageNumber");
+        const pageTrackOpt: PageTrack = {
+          navType       : ButtonConfig.Forward,
+          currentPageNum: pageNumber,
+          totalNumPages : 49
+        };
+        return pageTrackOpt;
+      })
+    )
+    pageTrackObs.subscribe(data => console.log(data))
+    return pageTrackObs;
+  }
   /**
    * 
    *
