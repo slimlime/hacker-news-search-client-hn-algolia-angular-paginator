@@ -62,7 +62,39 @@ export class NewsSearchService {
   constructor( public httpClient: HttpClient) {
     
   }
+  /**
+   * If already have an Observable/Subject set up emitting, easy just plug it 
+   * into the search service to manage the input events.??
+   * 
+   * @param {Observable<string>} searchQueryOptsObs
+   * @param {string} pageNumber virtual page of algolia search results. Limited.
+   * @returns {Observable<SearchHits>}
+   * @memberof NewsSearchService
+   */
+  searchSimples(
+    searchInputsObs: Observable<string>,
+    pageNumber     : string
+    )              : Observable<SearchHits> {
+    const newsSearchingOptsObs: Observable<SearchHits> = searchInputsObs.pipe(
+      // Milliseconds to wait until input is stable.
+      debounceTime(400),
+      
+      // Distinct topic search terms only.
+      distinctUntilChanged(),
 
+      // Discards results of prev outdated emissions. New input for GET call. 
+      // Maintains most recent Observable.
+      switchMap((searchInputTopic) => {
+        const searchHNObservable = this.searchHNArticles(
+          searchInputTopic,
+          pageNumber
+        );
+        return searchHNObservable;
+      })
+    );
+
+    return newsSearchingOptsObs;
+  }
   /**
    * If already have an Observable/Subject set up emitting, easy just plug it 
    * into the search service to manage the input events.??

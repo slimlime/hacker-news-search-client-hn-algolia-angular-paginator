@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 22: 45: 06
+ * @Last Modified time: 2018-10-25 22: 58: 10
  */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Params } from '@angular/router';
@@ -23,7 +23,10 @@ export class NewsReaderComponent implements OnInit {
 
   searchInputSubject$: Subject<string> = new Subject<string>();
 
+  // Over-engineered = buggy
   searchQuerySubject$: Subject<NewsSearchOpts> = new Subject<NewsSearchOpts>();
+
+  currentPageNumber: string = "0";
 
   buttonNav
   constructor( 
@@ -39,29 +42,21 @@ export class NewsReaderComponent implements OnInit {
     this.news$ = this.setupNewsSubscriptionSource(
       this.newsSearchService, 
       this.searchInputSubject$,
-      this.searchQuerySubject$
+      this.searchQuerySubject$,
+      this.currentPageNumber
     );
     
-    // Subscribed to get page ID stream which is using in combination with the user input stream
-    // for News Search querying
-    const routePageParamSub = this.activatedRoute.paramMap
-      .subscribe((paramMap: ParamMap) => {
-        const pageNumber: string = paramMap.get("pageNumber");
-        console.log('​NewsReaderComponent:: ngOnInit() -> pageNumber', pageNumber);
-        const newsSearchQueryOpts: NewsSearchOpts = {
-          pageNum: pageNumber
-        }
-        this.searchQuerySubject$.next(newsSearchQueryOpts)
-      });
-
+    
   }
 
   initSetupPageIDSearchPush() {
-    // Default
-    const newsSearchQueryOpts: NewsSearchOpts = {
-      pageNum: "0"
-    }
-    this.searchQuerySubject$.next(newsSearchQueryOpts);
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      console.log('​NewsReaderComponent:: initSetupPageIDSearchPush() -> paramMap', paramMap);
+      const pageNum = paramMap.get("pageNumber");
+      
+      this.currentPageNumber = pageNum;  // Mutator
+      console.log('​NewsReaderComponent:: initSetupPageIDSearchPush() -> this.currentPageNumber', this.currentPageNumber);
+    })
   }
   /**
    * Transform param pagenum observable to take in page config test
@@ -120,43 +115,49 @@ export class NewsReaderComponent implements OnInit {
   setupNewsSubscriptionSource(
     newsSearchService  : NewsSearchService,
     searchInputSubject$: Subject<string>,
-    searchQuerySubject$: Subject<NewsSearchOpts>
+    searchQuerySubject$: Subject<NewsSearchOpts>,
+    pageNumberParam    : string
     )                  : Observable<SearchHits> {
 
   
 
-    // const searchObs: Observable<SearchHits> = newsSearchService
-    //   .searchRealtimeValidated(searchInputSubject$, pageNum)
-    // ;
+    // // // const searchObs: Observable<SearchHits> = newsSearchService
+    // // //   .searchRealtimeValidated(searchInputSubject$, pageNum)
+    // // // ;
     
-    // this.activatedRoute.paramMap.pipe(
-    //   mergeMap((searchObs) => {
-    //     console.log('​NewsReaderComponent:: searchObs', searchObs);
+    // // // this.activatedRoute.paramMap.pipe(
+    // // //   mergeMap((searchObs) => {
+    // // //     console.log('​NewsReaderComponent:: searchObs', searchObs);
 
 
         
-    //   })
-    // )
+    // // //   })
+    // // // )
 
-    const searchResultsObs: Observable<SearchHits> = newsSearchService.searchRealtimeValidated(
-      searchInputSubject$,
-      searchQuerySubject$
-    );
-    // // Setup/subscribe to reactive news search results.
-    // // Prepare reactivity into news search service for user input as they occur.
-    // const searchMergedObs = this.activatedRoute.paramMap.pipe(
-    //   map((param: ParamMap) => {
-    //     console.log('​NewsReaderComponent:: param', param);
-    //     const pageNum                              = param.get("pageNumber");
-    //     const lolSearchObs: Observable<SearchHits> = newsSearchService
-    //       .searchRealtimeValidated(
-    //         searchInputSubject$,
-    //         searchQuerySubject$
-    //       );
-    //     return lolSearchObs
-    //   }),
-    //   mergeAll() // MERGE! -- TODO: replace with mergeMap/flatMap more elegant.
-    // );
+    // // const searchResultsObs: Observable<SearchHits> = newsSearchService.searchRealtimeValidated(
+    // //   searchInputSubject$,
+    // //   searchQuerySubject$
+    // // );
+    // // // // Setup/subscribe to reactive news search results.
+    // // // // Prepare reactivity into news search service for user input as they occur.
+    // // const searchMergedObs = this.activatedRoute.paramMap.pipe(
+    // //   map((param: ParamMap) => {
+    // //     console.log('​NewsReaderComponent:: param', param);
+    // //     const pageNum                              = param.get("pageNumber");
+    // //     const lolSearchObs: Observable<SearchHits> = newsSearchService
+    // //       .searchRealtimeValidated(
+    // //         searchInputSubject$,
+    // //         searchQuerySubject$
+    // //       );
+    // //     return lolSearchObs
+    // //   }),
+    // //   mergeAll() // MERGE! -- TODO: replace with mergeMap/flatMap more elegant.
+    // // );
+    
+    const searchResultsObs: Observable<SearchHits> = newsSearchService.searchSimples(
+      searchInputSubject$, pageNumberParam
+    )
+    // doesn't work. needs reactivity to respond to page number event.
 
     
     // Return the reactive data source
