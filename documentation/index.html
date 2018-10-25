@@ -1,0 +1,145 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>hacker-news-search-client-hn-algolia-angular-paginator documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	      <link rel="stylesheet" href="./styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">hacker-news-search-client-hn-algolia-angular-paginator documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1 id="hackernewssearchclienthnalgoliaangularpaginator">HackerNewsSearchClientHNAlgoliaAngularPaginator</h1>
+<p>Live demo available at <a href="https://slimlime.github.io/hacker-news-search-client-hn-algolia-angular-paginator/"><code>slimlime.github.io/hacker-news-search-client-hn-algolia-angular-paginator</code></a></p>
+<p>A Hacker News (HN) search client in Angular using the <a href="https://hn.algolia.com/api">HN Search API powered by Algolia</a>.</p>
+<p>Task: Query search API on user search input and display articles on the searched
+topic in forward/back button-navigable pagination.</p>
+<p>Some planning and writing out initially.. <a href="https://github.com/slimlime/hacker-news-search-client-hn-algolia-angular-paginator/projects">Kanban board!</a> with issues/features linked. Also check out open/closed 
+<a href="https://github.com/slimlime/hacker-news-search-client-hn-algolia-angular-paginator/milestones">milestones</a> and
+<a href="https://github.com/slimlime/hacker-news-search-client-hn-algolia-angular-paginator/issues?&amp;q=is%3Aissue">issues</a>
+tracker. ~</p>
+<p><em>Oops was editing this earlier...</em></p>
+<p>A web app that allows users to <strong>search</strong> for <strong>articles</strong> on a specific <strong>topic</strong> and display the results in a <strong>paged</strong> format that is <strong>navigable</strong> through forwards/back button. <sub> (Perhaps the <code>page</code> param exposed by the HN Algolia REST API could bypass the need for some extra service logic pagination here?)</sub></p>
+<ul>
+<li>Constraints are up to interpretation :lion:</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/slimlime/hacker-news-search-client-hn-algolia-angular-paginator/master/src/assets/hn-search-proto-wireframe-example-sav.png" alt="search-client-prototype-wireframe-example" class="img-responsive">
+<em>Mockup proto wireframe example given</em></p>
+<!-- [comment]: [//]<> -- https://raw.githubusercontent.com/slimlime/hacker-news-search-client-hn-algolia-angular-paginator/111eea7050bbc9abb064895327cb408711887174/src/assets/hn-search-proto-wireframe-example-sav.png
+-->
+<p>This project was generated with <a href="https://github.com/angular/angular-cli">Angular CLI</a> version 6.0.8.</p>
+<h2 id="deploy">Deploy</h2>
+<p>Using <code>angular-cli-ghpages</code> for easy deployment to GitHub Pages in <code>Bash</code> terminal:
+<code>npm install -g angular-cli-ghpages</code></p>
+<p>Make sure to set base-href for correct href resource links?</p>
+<p>e.g. <code>ng build --prod --base-href ./</code>?</p>
+<p>or</p>
+<p><code>ng build --prod --base-href &quot;https://slimlime.github.io/hacker-news-search-client-hn-algolia-angular-paginator/&quot;</code></p>
+<p>Workaround if you <em>__Reaally __</em> want to access SPA through file serve file:///</p>
+<p>In <code>index.html</code></p>
+<div><pre class="line-numbers"><code class="language-html">&lt;script&gt;document.write(&#39;&lt;base href=&quot;&#39; + document.location + &#39;&quot; /&gt;&#39;);&lt;/script&gt;</code></pre></div><p>Run angular-cli-ghpages with using the shorthand:</p>
+<p><code>ngh</code> -- Angular CLI 6 build outputs to a subfolder under <code>./dist</code>.</p>
+<p>Need to point --dir=dist/[PROJECTNAME]  -- found in <code>angular.json</code></p>
+<p>e.g. <code>ngh --dir=&quot;dist/hn-search-client&quot;</code></p>
+<h2 id="development-server">Development server</h2>
+<p>Run <code>ng serve</code> for a dev server. Navigate to <code>http://localhost:4200/</code>. The app will automatically reload if you change any of the source files.</p>
+<h2 id="code-scaffolding">Code scaffolding</h2>
+<p>Run <code>ng generate component component-name</code> to generate a new component. You can also use <code>ng generate directive|pipe|service|class|guard|interface|enum|module</code>.</p>
+<h2 id="build">Build</h2>
+<p>Run <code>ng build</code> to build the project. The build artifacts will be stored in the <code>dist/</code> directory. Use the <code>--prod</code> flag for a production build.</p>
+<h2 id="running-unit-tests">Running unit tests</h2>
+<p>Run <code>ng test</code> to execute the unit tests via <a href="https://karma-runner.github.io">Karma</a>.</p>
+<p>-- <code>ng test --code-coverage</code>?  May also look into npm <code>karma-typescript</code></p>
+<h2 id="running-end-to-end-tests">Running end-to-end tests</h2>
+<p>Run <code>ng e2e</code> to execute the end-to-end tests via <a href="http://www.protractortest.org/">Protractor</a>.</p>
+<h2 id="further-help">Further help</h2>
+<p>To get more help on the Angular CLI use <code>ng help</code> or go check out the <a href="https://github.com/angular/angular-cli/blob/master/README.md">Angular CLI README</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+       </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+       <script src="./js/menu-wc.js"></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

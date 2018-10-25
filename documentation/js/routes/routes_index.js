@@ -1,0 +1,1 @@
+var ROUTES_INDEX = {"name":"<root>","kind":"module","className":"AppModule","children":[{"name":"appRoutes","filename":"src/app/app-routing.module.ts","module":"AppRoutingModule","children":[{"path":"","redirectTo":"/news-reader/1","pathMatch":"full"},{"path":"news-reader/:pageNumber","component":"NewsReaderComponent"}],"kind":"module"}]}
