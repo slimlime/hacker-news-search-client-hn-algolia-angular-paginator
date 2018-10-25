@@ -3,7 +3,7 @@ import { SearchHits } from './../models/search-results-hits';
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 19: 01: 06
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 07: 56: 04
+ * @Last Modified time: 2018-10-25 10: 23: 12
  */
 
 import { Injectable } from '@angular/core';
@@ -36,7 +36,7 @@ export class NewsSearchService {
    * @type {string}
    * @memberof NewsSearchService
    */
-  readonly baseSearchHNAlgoliaUrl: string = "http://hn.algolia.com/api/v1/search";
+  readonly baseSearchHNAlgoliaUrl: string = "https://hn.algolia.com/api/v1/search";
 
   readonly searchUrlParamKey: string = "query"
 
