@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 15: 09: 59
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 22: 38: 31
+ * @Last Modified time: 2018-10-26 08: 52: 13
  */
 
 import { Component, Input, OnInit } from '@angular/core';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 
 /**
  * 
- * -- TODO Refactory
+ * -- TODO Refactor
  * @enum 
  */
 export enum ButtonConfig {
@@ -18,10 +18,22 @@ export enum ButtonConfig {
   Next     = "Next"
 }
 
+/**
+ * Recommended increments.
+ *
+ * @export
+ * @enum {number}
+ */
 export enum PageNavStep {
   Previous = -1,
   Next     = 1
 }
+/**
+ * Assist page tracking information.
+ *
+ * @export
+ * @interface PageTrack
+ */
 export interface PageTrack {
   readonly currentPageNum: number,
   readonly totalNumPages : number,
@@ -45,13 +57,14 @@ export class ButtonComponent implements OnInit {
   }
 
   /**
-   *
+   * Navigation logic for button presses.
+   * 
    * ??REST API limits might be 0,1 .. 50 51~ pages
    * @param {number} pageStep positive or negative increments. (Generally +-1)
    * @param {PageTrack} pageTrack
    * @memberof ButtonComponent
    */
-  onPageNavButton(router: Router, pageTrack: PageTrack) {
+  onPageNavButton(router: Router, pageTrack: PageTrack): void {
     // Hacky +prepend TypeScript number type not consistent in JavaScript. Concatenate digits bug.
     const buttonNavType    = pageTrack.navType;                 // e.g. back/forwards button
     const pageStep: number = +this.getPageStep(buttonNavType);
