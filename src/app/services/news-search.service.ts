@@ -49,6 +49,16 @@ export class NewsSearchService {
     
   }
 
+  /**
+   * If already have an Observable/Subject set up emitting, easy just plug it 
+   * into the search service to manage the input events.??
+   * 
+   * - WARNING: -- maybe defunct now.
+   *
+   * @param {Observable<string>} searchInputsObs
+   * @returns {Observable<SearchHits>}
+   * @memberof NewsSearchService
+   */
   searchRealtimeValidated(searchInputsObs: Observable<string>): Observable<SearchHits> {
     return searchInputsObs.pipe(
       // Milliseconds to wait until input is stable.
