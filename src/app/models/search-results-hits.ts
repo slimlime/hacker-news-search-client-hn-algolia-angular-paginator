@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 17: 58: 53
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 09: 26: 36
+ * @Last Modified time: 2018-10-25 10: 09: 09
  */
 import { SearchResultTopical } from './search-result-topic';
 
