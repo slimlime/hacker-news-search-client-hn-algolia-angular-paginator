@@ -3,7 +3,7 @@ import { SearchHits } from './../models/search-results-hits';
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 19: 01: 06
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 10: 23: 12
+ * @Last Modified time: 2018-10-25 14: 38: 15
  */
 
 import { Injectable } from '@angular/core';
