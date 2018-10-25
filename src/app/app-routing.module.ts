@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 14: 58: 40
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 10: 26: 38
+ * @Last Modified time: 2018-10-25 16: 43: 47
  */
 
 import { CommonModule } from '@angular/common';
@@ -14,11 +14,11 @@ import { NewsReaderComponent } from './components/news-reader/news-reader.compon
 const appRoutes: Routes = [
   {
     path      : "",
-    redirectTo: "/news-reader",
+    redirectTo: "/news-reader/1",
     pathMatch : "full"
   },
   {
-    path     : "news-reader",
+    path     : "news-reader/:pageNumber",
     component: NewsReaderComponent
   }
 ];

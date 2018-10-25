@@ -2,13 +2,15 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 16: 24: 06
+ * @Last Modified time: 2018-10-25 16: 36: 48
  */
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
 
 import { SearchHits } from './../../models/search-results-hits';
 import { NewsSearchService } from './../../services/news-search.service';
+
 
 
 @Component({
@@ -21,12 +23,18 @@ export class NewsReaderComponent implements OnInit {
 
   searchInputSubject$: Subject<string> = new Subject<string>();
 
-  constructor( public newsSearchService: NewsSearchService) {
+  constructor( 
+    public activatedRoute   : ActivatedRoute,
+    public newsSearchService: NewsSearchService) {
 
   }
 
   ngOnInit() {
-
+    this.activatedRoute.paramMap.subscribe(
+      (params: Params) => {
+        console.log('​NewsReaderComponent:: ngOnInit() -> params', params);
+      }
+    )
     // Set up news feed reactive data source
     this.news$ = this.setupNewsSubscriptionSource(this.newsSearchService);
   }
