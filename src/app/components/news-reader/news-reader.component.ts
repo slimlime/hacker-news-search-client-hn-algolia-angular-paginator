@@ -3,7 +3,7 @@ import { PageTrack, ButtonConfig } from './../button/button.component';
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 20: 33: 27
+ * @Last Modified time: 2018-10-25 20: 37: 14
  */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, ParamMap } from '@angular/router';
@@ -32,13 +32,6 @@ export class NewsReaderComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.activatedRoute.paramMap.subscribe(
-      (params: Params) => {
-        const pageNumber = params.get("pageNumber");
-        console.log('​NewsReaderComponent:: ngOnInit() -> pageNumber', pageNumber);
-      }
-    )
     // Set up news feed reactive data source
     this.news$ = this.setupNewsSubscriptionSource(this.newsSearchService);
   }
