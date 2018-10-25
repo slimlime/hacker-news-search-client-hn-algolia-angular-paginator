@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 15: 09: 59
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 17: 34: 40
+ * @Last Modified time: 2018-10-25 17: 46: 23
  */
 
 import { Component, Input, OnInit } from '@angular/core';
@@ -35,12 +35,13 @@ interface PageTrack {
 export class ButtonComponent implements OnInit {
   @Input() pageTrack: PageTrack;
 
+
   constructor(public router: Router) {
 
   }
 
   ngOnInit() {
-
+    console.log('​ButtonComponent:: ngOnInit() -> pageTrack', this.pageTrack);
   }
 
   /**

@@ -7,6 +7,6 @@
 <app-search-results [searchResults]="news$ | async"></app-search-results>
 
 <!-- - TODO: Add bindings -->
-<app-button></app-button>
+<app-button [pageTrack]="(this.activatedRoute.paramMap  | async).get('pageNumber') "></app-button>
 Page
-<app-button></app-button>
+<app-button [pageTrack]="(this.activatedRoute.paramMap  | async).get('pageNumber') "></app-button>
