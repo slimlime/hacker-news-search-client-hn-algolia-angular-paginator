@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-26 05: 40: 25
+ * @Last Modified time: 2018-10-26 05: 48: 35
  */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Params } from '@angular/router';
@@ -10,7 +10,7 @@ import { Observable, Subject } from 'rxjs';
 import { map, mergeAll } from 'rxjs/operators';
 
 import { SearchHits } from './../../models/search-results-hits';
-import { string, NewsSearchService } from './../../services/news-search.service';
+import { NewsSearchService, NewsSearchOpts } from './../../services/news-search.service';
 import { ButtonConfig, PageTrack } from './../button/button.component';
 
 @Component({
@@ -24,7 +24,7 @@ export class NewsReaderComponent implements OnInit {
   searchInputSubject$: Subject<string> = new Subject<string>();
 
   // Over-engineered = buggy
-  searchQuerySubject$: Subject<string> = new Subject<string>();
+  searchQueryParam$: Observable<NewsSearchOpts> = new Observable<NewsSearchOpts>();
 
   currentPageNumber: string = "0";
 
@@ -38,11 +38,20 @@ export class NewsReaderComponent implements OnInit {
   ngOnInit() {
     this.initSetupPageIDSearchPush(); 
 
+    this.searchQueryParam$ = this.activatedRoute.paramMap.pipe(
+      map((paramMap: ParamMap) => {
+        const pageNum: string = paramMap.get("pageNumber");
+
+        const searchOpts: NewsSearchOpts = {pageNum: pageNum};
+
+        return searchOpts
+      })
+    )
     // Set up news feed reactive data source
     this.news$ = this.setupNewsSubscriptionSource(
       this.newsSearchService, 
       this.searchInputSubject$,
-      this.searchQuerySubject$,
+      this.searchQueryParam$,
       this.currentPageNumber
     );
     
@@ -115,7 +124,7 @@ export class NewsReaderComponent implements OnInit {
   setupNewsSubscriptionSource(
     newsSearchService  : NewsSearchService,
     searchInputSubject$: Subject<string>,
-    searchQuerySubject$: Subject<string>,
+    searchQueryParam$  : Observable<NewsSearchOpts>,
     pageNumberParam    : string
     )                  : Observable<SearchHits> {
 
@@ -154,9 +163,14 @@ export class NewsReaderComponent implements OnInit {
     // //   mergeAll() // MERGE! -- TODO: replace with mergeMap/flatMap more elegant.
     // // );
     
-    const searchResultsObs: Observable<SearchHits> = newsSearchService.searchSimples(
-      searchInputSubject$, pageNumberParam
-    )
+    // const searchResultsObs: Observable<SearchHits> = newsSearchService.searchSimples(
+    //   searchInputSubject$, pageNumberParam
+    // )
+
+    const searchResultsObs: Observable<SearchHits> = newsSearchService.searchRealtimeReactiveInputPager(
+      searchInputSubject$,
+      searchQueryParam$
+    );
     // doesn't work. needs reactivity to respond to page number event.
 
     

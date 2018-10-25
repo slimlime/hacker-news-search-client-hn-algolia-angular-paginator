@@ -3,7 +3,7 @@ import { NewsSearchOpts } from './news-search.service';
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 19: 01: 06
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-26 05: 39: 48
+ * @Last Modified time: 2018-10-26 05: 49: 54
  */
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -113,7 +113,7 @@ export class NewsSearchService {
   searchRealtimeReactiveInputPager(
     searchInputObs     : Observable<string>,
     searchQueryPagerObs: Observable<NewsSearchOpts>
-  ) {
+    )                  : Observable<SearchHits>  {
 
     // Combine query input reactive streams
     const newsSearchOptsComboObs: Observable<[string, NewsSearchOpts]> = combineLatest(
@@ -147,6 +147,8 @@ export class NewsSearchService {
           return searchHNObs;
         })
       )
+    
+      return newsSearchResultsObs;
 
   }
   /**
