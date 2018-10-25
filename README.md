@@ -26,7 +26,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 Using `angular-cli-ghpages` for easy deployment to GitHub Pages in `Bash` terminal:
 `npm install -g angular-cli-ghpages`
 
-Make sure to set base-href for correct href resource links? e.g. `ng build --prod --base-href ./`?
+Make sure to set base-href for correct href resource links? 
+
+e.g. `ng build --prod --base-href ./`?
+
+or 
 
 `ng build --prod --base-href "https://slimlime.github.io/hacker-news-search-client-hn-algolia-angular-paginator/"`
 
