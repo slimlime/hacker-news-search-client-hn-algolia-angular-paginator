@@ -1,18 +1,17 @@
-import { PageTrack, ButtonConfig } from './../button/button.component';
 /*
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 21: 42: 34
+ * @Last Modified time: 2018-10-25 22: 31: 23
  */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, ParamMap } from '@angular/router';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { mergeAll, mergeMap, map } from 'rxjs/operators';
+import { ActivatedRoute, ParamMap, Params } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
+import { map, mergeAll } from 'rxjs/operators';
+
 import { SearchHits } from './../../models/search-results-hits';
-import { NewsSearchService } from './../../services/news-search.service';
-
-
+import { NewsSearchOpts, NewsSearchService } from './../../services/news-search.service';
+import { ButtonConfig, PageTrack } from './../button/button.component';
 
 @Component({
   selector   : 'app-news-reader',
@@ -23,6 +22,8 @@ export class NewsReaderComponent implements OnInit {
   news$: Observable<SearchHits>;
 
   searchInputSubject$: Subject<string> = new Subject<string>();
+
+  searchQuerySubject$: Subject<NewsSearchOpts> = new Subject<NewsSearchOpts>();
 
   buttonNav
   constructor( 
@@ -35,8 +36,22 @@ export class NewsReaderComponent implements OnInit {
     // Set up news feed reactive data source
     this.news$ = this.setupNewsSubscriptionSource(
       this.newsSearchService, 
-      this.searchInputSubject$
+      this.searchInputSubject$,
+      this.searchQuerySubject$
     );
+    
+    // Subscribed to get page ID stream which is using in combination with the user input stream
+    // for News Search querying
+    const routePageParamSub = this.activatedRoute.paramMap
+      .subscribe((paramMap: ParamMap) => {
+        const pageNumber: string = paramMap.get("pageNumber");
+        console.log('​NewsReaderComponent:: ngOnInit() -> pageNumber', pageNumber);
+        const newsSearchQueryOpts: NewsSearchOpts = {
+          pageNum: pageNumber
+        }
+        this.searchQuerySubject$.next(newsSearchQueryOpts)
+      });
+
   }
 
   /**
@@ -95,19 +110,12 @@ export class NewsReaderComponent implements OnInit {
    */
   setupNewsSubscriptionSource(
     newsSearchService  : NewsSearchService,
-    searchInputSubject$: Subject<string>
+    searchInputSubject$: Subject<string>,
+    searchQuerySubject$: Subject<NewsSearchOpts>
     )                  : Observable<SearchHits> {
 
-    
-    const routerParamSub: Subscription = this.activatedRoute.paramMap.subscribe(
-      (params: Params) => {
-
-      }
-    )
-
   
-    // // Setup/subscribe to reactive news search results.
-    // // Prepare reactivity into news search service for user input as they occur.
+
     // const searchObs: Observable<SearchHits> = newsSearchService
     //   .searchRealtimeValidated(searchInputSubject$, pageNum)
     // ;
@@ -120,15 +128,17 @@ export class NewsReaderComponent implements OnInit {
         
     //   })
     // )
+    // Setup/subscribe to reactive news search results.
+    // Prepare reactivity into news search service for user input as they occur.
     const searchMergedObs = this.activatedRoute.paramMap.pipe(
       map((param: ParamMap) => {
         console.log('​NewsReaderComponent:: param', param);
         const pageNum                              = param.get("pageNumber");
         const lolSearchObs: Observable<SearchHits> = newsSearchService
-          .searchRealtimeValidated(searchInputSubject$, pageNum);
+          .searchRealtimeValidated(searchInputSubject$, searchQuerySubject$);
         return lolSearchObs
       }),
-      mergeAll() // MERGE!
+      mergeAll() // MERGE! -- TODO: replace with mergeMap/flatMap more elegant.
     );
 
     
@@ -148,6 +158,8 @@ export class NewsReaderComponent implements OnInit {
   onUserSearchInput(searchTopic: string, searchInputSubject$: Subject<string>): void {
     console.log('​NewsReaderComponent:: onUserSearchInput -> searchTopic', searchTopic);
 
+    // forkjoin or combinelatest in newssearchservice?
+    
     searchInputSubject$.next(searchTopic); // Feels hacky/suboptimal
 
   }

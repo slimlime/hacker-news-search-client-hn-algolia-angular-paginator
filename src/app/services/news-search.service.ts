@@ -1,20 +1,24 @@
-import { SearchHits } from './../models/search-results-hits';
 /*
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 19: 01: 06
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 21: 19: 17
+ * @Last Modified time: 2018-10-25 22: 30: 03
  */
-
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, Subscription } from 'rxjs';
-import { debounceTime, 
-  distinctUntilChanged,
-  map,
-  switchMap
-} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { combineLatest, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
+import { SearchHits } from './../models/search-results-hits';
+
+
+
+
+
+export interface NewsSearchOpts {
+  readonly userInput?: string;
+  readonly pageNum   : string;
+}
 
 /**
  * HN Algolia news search service providing config, utility and safe searching..
@@ -63,31 +67,42 @@ export class NewsSearchService {
    * If already have an Observable/Subject set up emitting, easy just plug it 
    * into the search service to manage the input events.??
    * 
-   * @param {Observable<string>} searchInputsObs
+   * @param {Observable<string>} searchQueryOptsObs
    * @param {string} pageNumber virtual page of algolia search results. Limited.
    * @returns {Observable<SearchHits>}
    * @memberof NewsSearchService
    */
   searchRealtimeValidated(
-    searchInputsObs: Observable<string>,
-    pageNumber     : string
-    )              : Observable<SearchHits> {
-    return searchInputsObs.pipe(
+    searchInputsObs   : Observable<string>,
+    searchQueryOptsObs: Observable<NewsSearchOpts>
+    )                 : Observable<SearchHits> {
+    const newsSearchingOptsObs: Observable<string> = searchInputsObs.pipe(
       // Milliseconds to wait until input is stable.
       debounceTime(400),
       
       // Distinct topic search terms only.
       distinctUntilChanged(),
-
-      // Discards results of prev outdated emissions. New input for GET call. 
-      // Maintains most recent Observable.
-      switchMap(searchInputTopic => {
-        const searchHNObservable = this.searchHNArticles(searchInputTopic, pageNumber);
-        return searchHNObservable;
-      })
-      
     );
 
+    // Combined obs as both sources of data are naturally reactive. User input and route params
+    const searchInputPageCombo: Observable<[string, NewsSearchOpts]> = combineLatest(
+      newsSearchingOptsObs,
+      searchQueryOptsObs
+    );
+
+    const searchResultsObs = searchInputPageCombo.pipe(
+      // Discards results of prev outdated emissions. New input for GET call. 
+      // Maintains most recent Observable.
+      switchMap(([searchInput, searchQueryOpts]: [string, NewsSearchOpts]) => {
+        const searchHNObservable = this.searchHNArticles(
+          searchInput,
+          searchQueryOpts.pageNum
+        );
+        return searchHNObservable;
+      })
+    )
+
+    return searchResultsObs;
   }
 
   /**
