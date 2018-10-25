@@ -7,7 +7,10 @@ A Hacker News (HN) search client in Angular using the [HN Search API powered by 
 Task: Query search API on user search input and display articles on the searched
 topic in forward/back button-navigable pagination.
 
-Some planning and writing out initially.. [Kanban board!](https://github.com/slimlime/hacker-news-search-client-hn-algolia-angular-paginator/projects) with issues/features linked.
+Some planning and writing out initially.. [Kanban board!](https://github.com/slimlime/hacker-news-search-client-hn-algolia-angular-paginator/projects) with issues/features linked. Also check out open/closed 
+[milestones](https://github.com/slimlime/hacker-news-search-client-hn-algolia-angular-paginator/milestones) and
+[issues](https://github.com/slimlime/hacker-news-search-client-hn-algolia-angular-paginator/issues?&q=is%3Aissue)
+tracker. ~
 
 *Oops was editing this earlier...*
 
