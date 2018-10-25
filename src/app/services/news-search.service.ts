@@ -3,7 +3,7 @@ import { SearchHits } from './../models/search-results-hits';
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 19: 01: 06
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 21: 06: 41
+ * @Last Modified time: 2018-10-25 21: 19: 17
  */
 
 import { Injectable } from '@angular/core';
@@ -17,8 +17,8 @@ import { debounceTime,
 
 
 /**
- *
- *
+ * HN Algolia news search service providing config, utility and safe searching..
+ *: gem: 
  * @export
  * @class NewsSearchService
  */
@@ -63,13 +63,15 @@ export class NewsSearchService {
    * If already have an Observable/Subject set up emitting, easy just plug it 
    * into the search service to manage the input events.??
    * 
-   * - WARNING: -- maybe defunct now.
-   *
    * @param {Observable<string>} searchInputsObs
+   * @param {string} pageNumber virtual page of algolia search results. Limited.
    * @returns {Observable<SearchHits>}
    * @memberof NewsSearchService
    */
-  searchRealtimeValidated(searchInputsObs: Observable<string>): Observable<SearchHits> {
+  searchRealtimeValidated(
+    searchInputsObs: Observable<string>,
+    pageNumber     : string
+    )              : Observable<SearchHits> {
     return searchInputsObs.pipe(
       // Milliseconds to wait until input is stable.
       debounceTime(400),
@@ -80,7 +82,7 @@ export class NewsSearchService {
       // Discards results of prev outdated emissions. New input for GET call. 
       // Maintains most recent Observable.
       switchMap(searchInputTopic => {
-        const searchHNObservable = this.searchHNArticles(searchInputTopic);
+        const searchHNObservable = this.searchHNArticles(searchInputTopic, pageNumber);
         return searchHNObservable;
       })
       
@@ -100,16 +102,17 @@ export class NewsSearchService {
    * @returns {Observable}
    * @memberof NewsSearchService
    */
-  searchHNArticles(searchInput: string): Observable<SearchHits> {
+  searchHNArticles(searchInput: string, pageNumber: string): Observable<SearchHits> {
 
     // Debounce and distinct to prevent unnecessary DOS.
 
     // 1. First build the http parameters for the search query. GET
     const searchParamValue: string = searchInput;  // strings are passed by value anyway.
     // Immutable. Using this. properties that are readonly instead of local const
-    const httpSearchParams: HttpParams = new HttpParams().set(
-      this.searchUrlParamKey, searchParamValue
-    )
+    const httpSearchParams: HttpParams = new HttpParams()
+      .set(this.searchUrlParamKey, searchParamValue)
+      .set(this.searchUrlPageParamKey, pageNumber)
+    ;
     // Set up the httpClient options object (No interface provided)
     // 2. Set up the observable to receive the news results
     /** 

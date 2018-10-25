@@ -3,12 +3,12 @@ import { PageTrack, ButtonConfig } from './../button/button.component';
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 20: 37: 14
+ * @Last Modified time: 2018-10-25 21: 42: 34
  */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, ParamMap } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { mergeAll, mergeMap, map } from 'rxjs/operators';
 import { SearchHits } from './../../models/search-results-hits';
 import { NewsSearchService } from './../../services/news-search.service';
 
@@ -33,7 +33,10 @@ export class NewsReaderComponent implements OnInit {
 
   ngOnInit() {
     // Set up news feed reactive data source
-    this.news$ = this.setupNewsSubscriptionSource(this.newsSearchService);
+    this.news$ = this.setupNewsSubscriptionSource(
+      this.newsSearchService, 
+      this.searchInputSubject$
+    );
   }
 
   /**
@@ -84,24 +87,53 @@ export class NewsReaderComponent implements OnInit {
   }
 
   /**
-   * 
+   * Sets up / plugs-in user input for real-time reactive news search.
    *
    * @param {Observable<SearchHits>} news$
    * @param {NewsSearchService} newsSearchService
    * @memberof NewsReaderComponent
    */
   setupNewsSubscriptionSource(
-    newsSearchService: NewsSearchService
-    )                : Observable<SearchHits> {
+    newsSearchService  : NewsSearchService,
+    searchInputSubject$: Subject<string>
+    )                  : Observable<SearchHits> {
 
-    // Setup/subscribe to reactive news search results.
-    // Prepare reactivity into news search service for user input as they occur.
-    const searchObs: Observable<SearchHits> = this.newsSearchService
-      .searchRealtimeValidated(this.searchInputSubject$)
-    ;
+    
+    const routerParamSub: Subscription = this.activatedRoute.paramMap.subscribe(
+      (params: Params) => {
 
+      }
+    )
+
+  
+    // // Setup/subscribe to reactive news search results.
+    // // Prepare reactivity into news search service for user input as they occur.
+    // const searchObs: Observable<SearchHits> = newsSearchService
+    //   .searchRealtimeValidated(searchInputSubject$, pageNum)
+    // ;
+    
+    // this.activatedRoute.paramMap.pipe(
+    //   mergeMap((searchObs) => {
+    //     console.log('​NewsReaderComponent:: searchObs', searchObs);
+
+
+        
+    //   })
+    // )
+    const searchMergedObs = this.activatedRoute.paramMap.pipe(
+      map((param: ParamMap) => {
+        console.log('​NewsReaderComponent:: param', param);
+        const pageNum                              = param.get("pageNumber");
+        const lolSearchObs: Observable<SearchHits> = newsSearchService
+          .searchRealtimeValidated(searchInputSubject$, pageNum);
+        return lolSearchObs
+      }),
+      mergeAll() // MERGE!
+    );
+
+    
     // Return the reactive data source
-    return searchObs;
+    return searchMergedObs;
   }
 
   /**
