@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 09: 15: 20
+ * @Last Modified time: 2018-10-25 13: 31: 38
  */
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -34,4 +34,16 @@ export class NewsReaderComponent implements OnInit {
 
   }
 
+  /**
+   * Get search input text.
+   * For binding the event handler outputted by child search input component.
+   * 
+   * 
+   * @param {string} searchTopic
+   * @memberof NewsReaderComponent
+   */
+  onUserSearchInput(searchTopic: string): void {
+    console.log('​NewsReaderComponent:: searchTopic', searchTopic);
+    
+  }
 }

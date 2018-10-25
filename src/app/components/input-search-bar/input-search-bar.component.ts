@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-24 15: 11: 23
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 08: 23: 15
+ * @Last Modified time: 2018-10-25 13: 29: 36
  */
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
@@ -37,7 +37,7 @@ export class InputSearchBarComponent implements OnInit {
     
     console.log('​InputSearchBarComponent:: onSearchInput() -> searchInput', searchInputTopic);
 
-
-    return searchInputTopic // Not necessary
+    this.searchTopic.emit(searchInputTopic);
+    return searchInputTopic; // Not necessary
   }
 }
