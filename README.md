@@ -34,6 +34,17 @@ or
 
 `ng build --prod --base-href "https://slimlime.github.io/hacker-news-search-client-hn-algolia-angular-paginator/"`
 
+
+Workaround if you *__Reaally __* want to access SPA through file serve file:///
+
+In `index.html`
+
+
+```
+<script>document.write('<base href="' + document.location + '" />');</script>
+```
+
+
 Run angular-cli-ghpages with using the shorthand:
 
 `ngh` -- Angular CLI 6 build outputs to a subfolder under `./dist`. 
