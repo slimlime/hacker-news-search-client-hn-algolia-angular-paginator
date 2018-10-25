@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 14: 19: 17
+ * @Last Modified time: 2018-10-25 14: 37: 23
  */
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
@@ -19,46 +19,38 @@ import { NewsSearchService } from './../../services/news-search.service';
 export class NewsReaderComponent implements OnInit {
   news$: Observable<SearchHits>;
 
-  searchInputSubject: Subject<string> = new Subject<string>();
+  searchInputSubject$: Subject<string> = new Subject<string>();
 
   constructor( public newsSearchService: NewsSearchService) {
 
   }
 
   ngOnInit() {
-    const searchObs: Observable<SearchHits> = this.newsSearchService.searchHNArticles("Deep Learning");
-    searchObs.subscribe((searchResultsAgg: SearchHits) => {
-      console.log('​NewsReaderComponent:: ngOnInit() -> searchResultsAgg', searchResultsAgg);
-      console.log('​NewsReaderComponent:: ngOnInit() -> searchResultsAgg', JSON.stringify(searchResultsAgg), null, "\t"); // -- WARNING: 20 kilobytes of text
-      // - DEBUG: TEST
 
-    });
-
+    // Setup/subscribe to reactive news search results.
+    const searchObs: Observable<SearchHits> = this.newsSearchService
+      .searchRealtimeValidated(this.searchInputSubject$)
+    ;
     this.news$ = searchObs;
 
-    const testSearchResultsObs: Observable<SearchHits> = this.newsSearchService
-      .searchRealtimeValidated(this.searchInputSubject);
-      
-    testSearchResultsObs.subscribe(data => 
-      console.log('​NewsReaderComponent:: data', data)
+    searchObs.subscribe((searchResults: SearchHits) => 
+      console.log('​NewsReaderComponent:: ngOnInit -> searchResults number of hits', searchResults.hits)
     );
 
   }
 
   /**
-   * Get search input text.
+   * Get search input text. Push the input updates into the searchInputSubject
    * For binding the event handler outputted by child search input component.
    * 
-   * 
+   * @example this.onUserSearchInput("Deep Learning", this.searchInputSubject);
    * @param {string} searchTopic
    * @memberof NewsReaderComponent
    */
-  onUserSearchInput(searchTopic: string, newsSearchService: NewsSearchService): void {
-    this.searchInputSubject.next(searchTopic); // Oops hacky.
+  onUserSearchInput(searchTopic: string, searchInputSubject: Subject<string>): void {
+    console.log('​NewsReaderComponent:: onUserSearchInput -> searchTopic', searchTopic);
 
-    console.log('​NewsReaderComponent:: searchTopic', searchTopic);
-    // oops newsSearch expects an observable.
-    // buggy
+    searchInputSubject.next(searchTopic); // Feels hacky/suboptimal
 
   }
 }
