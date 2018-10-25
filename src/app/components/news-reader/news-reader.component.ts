@@ -2,7 +2,7 @@
  * @Author            : Samuel Lim
  * @Date              : 2018-10-25 05: 23: 34
  * @Last Modified by  : slimlime
- * @Last Modified time: 2018-10-25 16: 20: 09
+ * @Last Modified time: 2018-10-25 16: 24: 06
  */
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
@@ -49,15 +49,8 @@ export class NewsReaderComponent implements OnInit {
       .searchRealtimeValidated(this.searchInputSubject$)
     ;
 
-
-    const searchSubscription: Subscription = searchObs.subscribe((searchResults: SearchHits) =>
-      console.log('​NewsReaderComponent:: ngOnInit -> searchResults number of hits', searchResults.hits)
-    );
-
-    // Return the reactive data source    // Assign the reactive data source
-    // news$ = searchObs;
+    // Return the reactive data source
     return searchObs;
-    // return searchSubscription // unused.
   }
 
   /**
