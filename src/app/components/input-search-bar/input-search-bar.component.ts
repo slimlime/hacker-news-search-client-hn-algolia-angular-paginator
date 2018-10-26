@@ -9,7 +9,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 @Component({
   selector   : 'app-input-search-bar',
   templateUrl: './input-search-bar.component.html',
-  styleUrls  : ['./input-search-bar.component.css']
+  styleUrls  : ['./input-search-bar.component.scss']
 })
 export class InputSearchBarComponent implements OnInit {
   // @Input @Output vs Shared singleton reactive service. References issue #18

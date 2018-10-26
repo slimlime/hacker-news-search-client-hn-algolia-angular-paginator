@@ -16,7 +16,7 @@ import { ButtonConfig, PageTrack } from './../button/button.component';
 @Component({
   selector   : 'app-news-reader',
   templateUrl: './news-reader.component.html',
-  styleUrls  : ['./news-reader.component.css']
+  styleUrls  : ['./news-reader.component.scss']
 })
 export class NewsReaderComponent implements OnInit {
   news$: Observable<SearchHits>;
