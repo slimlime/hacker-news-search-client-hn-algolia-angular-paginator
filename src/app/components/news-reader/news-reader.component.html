@@ -5,6 +5,7 @@
 <!-- - TODO: Add bindings -->
 <!-- Trying funky Angular template technique for fun -->
 <!-- ngIf logic and extended pageTrack logic should be encapsulated more in `.ts` -->
+<!-- Transforms param into the PageTrack options for button config -->
 <app-button *ngIf="this.activatedRoute.paramMap" [pageTrack]="(this.setupNavComponentOptions(this.activatedRoute.paramMap, 'Previous') | async)"></app-button>
 <!-- Page {{(this.activatedRoute.paramMap | async).get["pageNumber"]}} -->
 Page {{this.currentPageNumber}}
