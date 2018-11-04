@@ -19,11 +19,26 @@ import { ButtonConfig, PageTrack } from './../button/button.component';
   styleUrls  : ['./news-reader.component.scss']
 })
 export class NewsReaderComponent implements OnInit {
+  /**
+   * Set up for the reactive stream for news search feed
+   *
+   * @type {Observable<SearchHits>}
+   * @memberof NewsReaderComponent
+   */
   news$: Observable<SearchHits>;
 
+  /**
+   * Input stream that can be `next`ed with new user input
+   * emitted by `input-search-bar` component's `@Output`
+   * Bound`@Output() searchTopic`
+   *
+   * @type {Subject<string>}
+   * @memberof NewsReaderComponent
+   */
   searchInputSubject$: Subject<string> = new Subject<string>();
 
-  // Over-engineered = buggy
+  // Over-engineered = buggy? Parameters to facilitate search. 
+  // -- TODO: Break up interfaces and re-architect project structure.
   searchQueryParam$: Observable<NewsSearchOpts> = new Observable<NewsSearchOpts>();
 
   currentPageNumber: string = "0";
