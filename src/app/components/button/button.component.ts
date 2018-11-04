@@ -6,7 +6,6 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
 
 /**
  * 
@@ -95,7 +94,7 @@ export class ButtonComponent implements OnInit {
    */
   @Output() buttonClickNavigateToPageNumber: EventEmitter<PageTrack>;
 
-  constructor(public router: Router) {
+  constructor() {
 
   }
 
@@ -112,7 +111,7 @@ export class ButtonComponent implements OnInit {
    * @param {PageTrack} pageTrack
    * @memberof ButtonComponent
    */
-  onPageNavButtonEmit(router: Router, pageTrack: PageTrack): void {
+  onPageNavButtonEmit(pageTrack: PageTrack): void {
     // Hacky +prepend TypeScript number type not consistent in JavaScript. Concatenate digits bug.
     const buttonNavType = pageTrack.navType;  // e.g. back/forwards button
 

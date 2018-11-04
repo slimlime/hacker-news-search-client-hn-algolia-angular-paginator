@@ -73,6 +73,13 @@ export class NewsReaderComponent implements OnInit {
     
   }
 
+  /**
+   * Initial setup of page feed
+   * 
+   * -- TODO: Display a default search results feed on page load for ux expectations.
+   *
+   * @memberof NewsReaderComponent
+   */
   initSetupPageIDSearchPush() {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       console.log('​NewsReaderComponent:: initSetupPageIDSearchPush() -> paramMap', paramMap);
@@ -82,6 +89,7 @@ export class NewsReaderComponent implements OnInit {
       console.log('​NewsReaderComponent:: initSetupPageIDSearchPush() -> this.currentPageNumber', this.currentPageNumber);
     })
   }
+
   /**
    * Transform param pagenum observable to take in page config test
    * Template async binding to the observable returned here.
@@ -117,7 +125,17 @@ export class NewsReaderComponent implements OnInit {
     return pageTrackObs;
   }
 
-  setupPageTrack(navType: ButtonConfig,
+  /**
+   *
+   * -- redundant
+   * @param {ButtonConfig} navType
+   * @param {number} pageNum
+   * @param {number} totalNumPages
+   * @returns {PageTrack}
+   * @memberof NewsReaderComponent
+   */
+  setupPageTrack(
+    navType      : ButtonConfig,
     pageNum      : number,
     totalNumPages: number
     )            : PageTrack {
@@ -143,52 +161,13 @@ export class NewsReaderComponent implements OnInit {
     pageNumberParam    : string
     )                  : Observable<SearchHits> {
 
-  
-
-    // // // const searchObs: Observable<SearchHits> = newsSearchService
-    // // //   .searchRealtimeValidated(searchInputSubject$, pageNum)
-    // // // ;
-    
-    // // // this.activatedRoute.paramMap.pipe(
-    // // //   mergeMap((searchObs) => {
-    // // //     console.log('​NewsReaderComponent:: searchObs', searchObs);
-
-
-        
-    // // //   })
-    // // // )
-
-    // // const searchResultsObs: Observable<SearchHits> = newsSearchService.searchRealtimeValidated(
-    // //   searchInputSubject$,
-    // //   searchQuerySubject$
-    // // );
-    // // // // Setup/subscribe to reactive news search results.
-    // // // // Prepare reactivity into news search service for user input as they occur.
-    // // const searchMergedObs = this.activatedRoute.paramMap.pipe(
-    // //   map((param: ParamMap) => {
-    // //     console.log('​NewsReaderComponent:: param', param);
-    // //     const pageNum                              = param.get("pageNumber");
-    // //     const lolSearchObs: Observable<SearchHits> = newsSearchService
-    // //       .searchRealtimeValidated(
-    // //         searchInputSubject$,
-    // //         searchQuerySubject$
-    // //       );
-    // //     return lolSearchObs
-    // //   }),
-    // //   mergeAll() // MERGE! -- TODO: replace with mergeMap/flatMap more elegant.
-    // // );
-    
-    // const searchResultsObs: Observable<SearchHits> = newsSearchService.searchSimples(
-    //   searchInputSubject$, pageNumberParam
-    // )
-
+    // Setup reactive input streams input and query parameters.
+    // `newsSearchService` handles/combines the reactive input- updates+queries.
     const searchResultsObs: Observable<SearchHits> = newsSearchService.searchRealtimeReactiveInputPager(
       searchInputSubject$,
       searchQueryParam$
     );
-    // doesn't work. needs reactivity to respond to page number event.
 
-    
     // Return the reactive data source
     return searchResultsObs;
   }
@@ -210,4 +189,5 @@ export class NewsReaderComponent implements OnInit {
     searchInputSubject$.next(searchTopic); // Feels hacky/suboptimal
 
   }
+  
 }
