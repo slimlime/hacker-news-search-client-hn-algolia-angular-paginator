@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 
 /**
  * 
- * -- TODO Refactor
+ * -- TODO: Refactor
  * @enum 
  */
 export enum ButtonConfig {
@@ -20,7 +20,7 @@ export enum ButtonConfig {
 
 /**
  * Recommended increments.
- *
+ * -- TODO: Break out interfaces
  * @export
  * @enum {number}
  */
@@ -32,6 +32,7 @@ export enum PageNavStep {
 /**
  * Assist page tracking information of paginated view components.
  *
+ * Could also add page step information here for all page tracking components.
  * @export
  * @interface PageTrack
  */
@@ -84,13 +85,15 @@ export class ButtonComponent implements OnInit {
   @Input() pageTrack: PageTrack;
   
   /**
-   * Output to emit page number on interaction
+   * Output to emit pagetracking information, nav page number on interaction
+   * Used to navigate to a specific pagenumber.
+   * 
    * Could be refactored to improve facility for general nav components
    *
-   * @type {EventEmitter<number>}
+   * @type {EventEmitter<PageTrack>}
    * @memberof ButtonComponent
    */
-  @Output() buttonClickNavigateToPageNumber: EventEmitter<number>;
+  @Output() buttonClickNavigateToPageNumber: EventEmitter<PageTrack>;
 
   constructor(public router: Router) {
 
@@ -101,33 +104,40 @@ export class ButtonComponent implements OnInit {
   }
 
   /**
-   * Navigation logic for button presses.
+   * Emit page tracking navigation information on interaction.
+   * 
    * 
    * ??REST API limits might be 0,1 .. 50 51~ pages
-   * @param {number} pageStep positive or negative increments. (Generally +-1)
+   * @param {Router} router
    * @param {PageTrack} pageTrack
    * @memberof ButtonComponent
    */
-  onPageNavButton(router: Router, pageTrack: PageTrack): void {
+  onPageNavButtonEmit(router: Router, pageTrack: PageTrack): void {
     // Hacky +prepend TypeScript number type not consistent in JavaScript. Concatenate digits bug.
-    const buttonNavType    = pageTrack.navType;                 // e.g. back/forwards button
-    const pageStep: number = +this.getPageStep(buttonNavType);
-    // console.log('​ButtonComponent:: onPageNavButton() -> pageStep', pageStep);
-    const pageNavNum: number = this.pageNumWrapAroundCheck(pageStep, pageTrack);
-    // console.log('​ButtonComponent:: onPageNavButton() -> pageNavNum', pageNavNum);
+    const buttonNavType = pageTrack.navType;  // e.g. back/forwards button
+
+    // pageStep in-built increment logic in button component to refactor. Redesign
+    const pageStep: number = +this.getPageStep(buttonNavType);  // -- TODO: Refactor nav config
     
-    const newPg: PageTrack = {
+    // New paginator pageNum to redirect to.
+    const pageNavNum: number = this.pageNumWrapAroundCheck(pageStep, pageTrack);
+
+    
+    const newNavPageTrack: PageTrack = {
       currentPageNum: pageTrack.currentPageNum,
       totalNumPages : pageTrack.totalNumPages,
       navType       : pageTrack.navType,
       newPageNavNum : pageNavNum,
     } 
-    router.navigate(['/news-reader', pageNavNum]) // - TODO: Clean up magic string literals
-    // exports, constants, compile dev info.
+
+    // Fin emit configured nav information back to top-level smart component.
+    this.buttonClickNavigateToPageNumber.emit(newNavPageTrack);
   }
 
   /**
    * Page step logic
+   * -- TODO: Refactor, pageNavStep should probably be included as an input with
+   * {PageTrack} for customisability.
    *
    * @param {ButtonConfig} navType
    * @returns {number}
@@ -147,14 +157,16 @@ export class ButtonComponent implements OnInit {
       }
     }
   }
+
   /**
    * Simple check for logical page number limits
-   *
+   * @param {number} pageStep positive or negative increments. (Generally +-1)
+   * @param {PageTrack} pageTrack pagination nav feed information
+   * @returns {number}
    * @memberof ButtonComponent
    */
   pageNumWrapAroundCheck(pageStep: number, pageTrack: PageTrack): number {
     const pageNum: number = +(pageTrack.currentPageNum)
-    // console.log('​ButtonComponent:: pageNum', pageNum, pageNum+pageStep);
     // Careful. TypeScript number type doesn't assert in JavaScript...
     const newPageNumber: number = ((pageNum + pageStep) >= 0) ? (pageNum + pageStep) : 0;
     console.log('​ButtonComponent:: newPageNumber', newPageNumber);
