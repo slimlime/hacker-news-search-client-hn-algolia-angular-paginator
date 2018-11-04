@@ -15,7 +15,12 @@
         <!-- Trying funky Angular template technique for fun. -->
         <!-- Transforms param into the PageTrack options for button config -->
         <div class="d-flex justify-content-between">
-            <app-button class="p-2" *ngIf="this.activatedRoute.paramMap" [pageTrack]="(this.setupNavComponentOptions(this.activatedRoute.paramMap, 'Previous') | async)">
+            <app-button class="p-2" 
+                *ngIf="this.activatedRoute.paramMap" 
+                [pageTrack]="(this.setupNavComponentOptions(this.activatedRoute.paramMap, 'Previous') | async)"
+                (buttonClickNavigateToPageNumber)="onUserNavButtonInteraction($event, this.router)"
+            >
+                
             </app-button>
 
             <!-- Page {{(this.activatedRoute.paramMap | async).get["pageNumber"]}} -->
@@ -23,7 +28,13 @@
                 Page {{this.currentPageNumber}}
             </div>
 
-            <app-button class="p-2" *ngIf="this.activatedRoute.paramMap" [pageTrack]="(this.setupNavComponentOptions(this.activatedRoute.paramMap, 'Next') | async)">
+            <!-- Less agreeable when some logic is in html template code? but pipes. -->
+            <app-button class="p-2" 
+                *ngIf="this.activatedRoute.paramMap" 
+                [pageTrack]="(this.setupNavComponentOptions(this.activatedRoute.paramMap, 'Next') | async)"
+                (buttonClickNavigateToPageNumber)="onUserNavButtonInteraction($event, this.router)"
+            >
+                
             </app-button>
         </div>
     </div>

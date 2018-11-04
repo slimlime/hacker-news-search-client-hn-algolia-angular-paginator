@@ -5,7 +5,7 @@
  * @Last Modified time: 2018-10-26 05: 48: 35
  */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Params } from '@angular/router';
+import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { map, mergeAll } from 'rxjs/operators';
 
@@ -46,7 +46,9 @@ export class NewsReaderComponent implements OnInit {
   buttonNav
   constructor( 
     public activatedRoute   : ActivatedRoute,
-    public newsSearchService: NewsSearchService) {
+    public newsSearchService: NewsSearchService,
+    public router           : Router
+  ) {
 
   }
 
@@ -108,7 +110,7 @@ export class NewsReaderComponent implements OnInit {
     // 
     const pageTrackObs: Observable<PageTrack> = routerParamMap.pipe(
       map((params: Params) => {
-        console.log('​NewsReaderComponent:: routerParamMap pipe params', params);
+        // console.log('​NewsReaderComponent:: routerParamMap pipe params', params);
         const pageNumber: number = params.get("pageNumber");
 
         const pageTrackOptions: PageTrack = this.setupPageTrack(
@@ -116,7 +118,6 @@ export class NewsReaderComponent implements OnInit {
           pageNumber, 
           50 // - TODO: placeholder totalNumPage until forkjoin other news$
         ); 
-        // console.log('​NewsReaderComponent:: pageTrackOptions', pageTrackOptions);
 
         return pageTrackOptions;
       })
@@ -182,7 +183,7 @@ export class NewsReaderComponent implements OnInit {
    * @memberof NewsReaderComponent
    */
   onUserSearchInput(searchTopic: string, searchInputSubject$: Subject<string>): void {
-    console.log('​NewsReaderComponent:: onUserSearchInput -> searchTopic', searchTopic);
+    // console.log('​NewsReaderComponent:: onUserSearchInput -> searchTopic', searchTopic);
 
     // forkjoin or combinelatest in newssearchservice?
     
@@ -190,4 +191,20 @@ export class NewsReaderComponent implements OnInit {
 
   }
   
+  /**
+   * Ostensibly to manage the emissions of nav button components for routing nav
+   *
+   * @param {PageTrack} navPageTrack
+   * @param {Router} router
+   * @memberof NewsReaderComponent
+   */
+  onUserNavButtonInteraction(navPageTrack: PageTrack, router: Router): void {
+    console.log('​NewsReaderComponent:: navPageTrack', navPageTrack);
+    
+    // New page number to navigate to.
+    const navPageNum: number = navPageTrack.newPageNavNum;
+
+    // Navigate the paginated news feed with pageID url-passed value.
+    router.navigate(['/news-reader', navPageNum]);
+  }
 }

@@ -92,7 +92,8 @@ export class ButtonComponent implements OnInit {
    * @type {EventEmitter<PageTrack>}
    * @memberof ButtonComponent
    */
-  @Output() buttonClickNavigateToPageNumber: EventEmitter<PageTrack>;
+  @Output() buttonClickNavigateToPageNumber: EventEmitter<PageTrack> = 
+    new EventEmitter<PageTrack>();
 
   constructor() {
 
