@@ -5,7 +5,7 @@
  * @Last Modified time: 2018-10-26 08: 52: 13
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 /**
@@ -28,16 +28,45 @@ export enum PageNavStep {
   Previous = -1,
   Next     = 1
 }
+
 /**
- * Assist page tracking information.
+ * Assist page tracking information of paginated view components.
  *
  * @export
  * @interface PageTrack
  */
 export interface PageTrack {
+  /**
+   * Current page number 
+   *
+   * @type {number}
+   * @memberof PageTrack
+   */
   readonly currentPageNum: number,
-  readonly totalNumPages : number,
-  readonly navType       : ButtonConfig
+
+  /**
+   *
+   *
+   * @type {number}
+   * @memberof PageTrack
+   */
+  readonly totalNumPages: number,
+
+  /**
+   * Type of interact component / button.
+   * @example ButtonConfig.Next .Previous
+   * @type {ButtonConfig}
+   * @memberof PageTrack
+   */
+  readonly navType: ButtonConfig,
+
+  /**
+   * New page number to be emitted from button/interact component
+   * 
+   * @type {number} optional
+   * @memberof PageTrack
+   */
+  readonly newPageNavNum?: number
 }
 @Component({
   selector   : 'app-button',
@@ -45,8 +74,23 @@ export interface PageTrack {
   styleUrls  : ['./button.component.scss']
 })
 export class ButtonComponent implements OnInit {
+  /**
+   * Input pageTrack to set up button component.
+   * Style, label, navigation type.
+   *
+   * @type {PageTrack}
+   * @memberof ButtonComponent
+   */
   @Input() pageTrack: PageTrack;
-
+  
+  /**
+   * Output to emit page number on interaction
+   * Could be refactored to improve facility for general nav components
+   *
+   * @type {EventEmitter<number>}
+   * @memberof ButtonComponent
+   */
+  @Output() buttonClickNavigateToPageNumber: EventEmitter<number>;
 
   constructor(public router: Router) {
 
@@ -72,6 +116,12 @@ export class ButtonComponent implements OnInit {
     const pageNavNum: number = this.pageNumWrapAroundCheck(pageStep, pageTrack);
     // console.log('​ButtonComponent:: onPageNavButton() -> pageNavNum', pageNavNum);
     
+    const newPg: PageTrack = {
+      currentPageNum: pageTrack.currentPageNum,
+      totalNumPages : pageTrack.totalNumPages,
+      navType       : pageTrack.navType,
+      newPageNavNum : pageNavNum,
+    } 
     router.navigate(['/news-reader', pageNavNum]) // - TODO: Clean up magic string literals
     // exports, constants, compile dev info.
   }
@@ -105,7 +155,6 @@ export class ButtonComponent implements OnInit {
   pageNumWrapAroundCheck(pageStep: number, pageTrack: PageTrack): number {
     const pageNum: number = +(pageTrack.currentPageNum)
     // console.log('​ButtonComponent:: pageNum', pageNum, pageNum+pageStep);
-    // - TODO: Check if page num 0, 1
     // Careful. TypeScript number type doesn't assert in JavaScript...
     const newPageNumber: number = ((pageNum + pageStep) >= 0) ? (pageNum + pageStep) : 0;
     console.log('​ButtonComponent:: newPageNumber', newPageNumber);
