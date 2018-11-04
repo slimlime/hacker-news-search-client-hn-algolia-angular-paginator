@@ -8,7 +8,7 @@ import { NewsSearchOpts } from './news-search.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 
 import { SearchHits } from './../models/search-results-hits';
 
@@ -83,6 +83,11 @@ export class NewsSearchService {
     pageNumber     : string
     )              : Observable<SearchHits> {
     const newsSearchingOptsObs: Observable<SearchHits> = searchInputsObs.pipe(
+      map((data) => {
+        console.log('​NewsSearchService:: searchSimples -> data', data);
+        
+        return data;
+      }),
       // Milliseconds to wait until input is stable.
       debounceTime(400),
       
@@ -91,7 +96,7 @@ export class NewsSearchService {
 
       // Discards results of prev outdated emissions. New input for GET call. 
       // Maintains most recent Observable.
-      switchMap((searchInputTopic) => {
+      switchMap((searchInputTopic: string) => {
         const searchHNObservable = this.searchHNArticles(
           searchInputTopic,
           pageNumber
@@ -124,6 +129,16 @@ export class NewsSearchService {
 
     const newsSearchResultsObs: Observable<SearchHits> = newsSearchOptsComboObs
       .pipe(
+        // -- DEBUG: TEST pinging search service.
+        map((searchInputAndQuery: [string, NewsSearchOpts]) => {
+          console.log('​NewsSearchService:: ',
+            'searchRealtimeReactiveInputPager ',
+            '-> searchInputAndQuery',
+            searchInputAndQuery
+          );
+          
+          return searchInputAndQuery;
+        }),
         // Rate-limiters
         // Milliseconds to wait until inputs are stable.
         debounceTime(400),
@@ -215,7 +230,7 @@ export class NewsSearchService {
       searchInput,
       pageNumber
     );
-    console.log('​NewsSearchService:: httpSearchParams', httpSearchParams);
+    console.log('​NewsSearchService:: searchHNArticles -> httpSearchParams', httpSearchParams);
     
     // Set up the httpClient options object (No interface provided)
     // 2. Set up the observable to receive the news results

@@ -37,10 +37,23 @@ export class NewsReaderComponent implements OnInit {
    */
   searchInputSubject$: Subject<string> = new Subject<string>();
 
-  // Over-engineered = buggy? Parameters to facilitate search. 
-  // -- TODO: Break up interfaces and re-architect project structure.
+  /**
+   * Search query parameters changing reactive stream to be handled by 
+   * newsSearchService
+   * 
+   * Over-engineered = buggy? Parameters to facilitate search.
+   * -- TODO: Break up interfaces and re-architect project structure.
+   * @type {Observable<NewsSearchOpts>}
+   * @memberof NewsReaderComponent
+   */
   searchQueryParam$: Observable<NewsSearchOpts> = new Observable<NewsSearchOpts>();
 
+  /**
+   * Initial page number for `hn algolia` search query parameter.
+   *
+   * @type {string}
+   * @memberof NewsReaderComponent
+   */
   currentPageNumber: string = "0";
 
   buttonNav
@@ -53,7 +66,6 @@ export class NewsReaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initSetupPageIDSearchPush(); 
 
     this.searchQueryParam$ = this.activatedRoute.paramMap.pipe(
       map((paramMap: ParamMap) => {
@@ -72,24 +84,62 @@ export class NewsReaderComponent implements OnInit {
       this.currentPageNumber
     );
     
-    
+    this.setupPageInitSearchTopicsInput(this.searchInputSubject$); // Probably should keep local state.
+    this.setupPageInitPageNumberIDForSearchPush(); 
+  }
+
+
+  /**
+   * -- TODO: Fix reactivity sequence for initial view not working.
+   * Initial setup of page feed search input
+   * Resolves new page load search to include a search page topic for first results.
+   * 
+   * @param {Subject<string>} newsSearchInputSubject Subject to push the topic input to.
+   * @default {string} search topic value of 'Deep Learning'
+   * @param {string} [searchTopic='Deep Learning'] Default search topic
+   * @memberof NewsReaderComponent
+   */
+  setupPageInitSearchTopicsInput(
+    newsSearchInputSubject: Subject<string>,
+    searchTopic           : string = 'Deep Learning'
+    )                     : void {
+      
+    console.log('​NewsReaderComponent:: setupPageInitSearchTopicsInput -> newsSearchInputSubject', newsSearchInputSubject);
+    console.log('​NewsReaderComponent:: setupPageInitSearchTopicsInput -> searchTopic', searchTopic);
+    // Required news search input subject as parameter.. Might as well use `this`.
+    newsSearchInputSubject.next(searchTopic);
   }
 
   /**
-   * Initial setup of page feed
+   * Initial setup of page feed pageNumber.
+   * Resolves new page load search to include a search page number param.
    * 
-   * -- TODO: Display a default search results feed on page load for ux expectations.
    *
    * @memberof NewsReaderComponent
    */
-  initSetupPageIDSearchPush() {
+  setupPageInitPageNumberIDForSearchPush(): void {
+    // Subscribe to get router url parameter pageNumber id updates.
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      console.log('​NewsReaderComponent:: initSetupPageIDSearchPush() -> paramMap', paramMap);
+      
+      console.log(
+        '​NewsReaderComponent::',
+        'setupPageInitPageNumberIDForSearchPush()',
+        '-> paramMap',
+        paramMap
+      );
+      
       const pageNum = paramMap.get("pageNumber");
       
       this.currentPageNumber = pageNum;  // Mutator
-      console.log('​NewsReaderComponent:: initSetupPageIDSearchPush() -> this.currentPageNumber', this.currentPageNumber);
-    })
+      
+      console.log(
+        '​NewsReaderComponent:: ',
+        'setupPageInitPageNumberIDForSearchPush() -> ',
+        'this.currentPageNumber',
+        this.currentPageNumber
+      );
+
+    });
   }
 
   /**
@@ -168,7 +218,7 @@ export class NewsReaderComponent implements OnInit {
       searchInputSubject$,
       searchQueryParam$
     );
-
+    
     // Return the reactive data source
     return searchResultsObs;
   }
